@@ -1,0 +1,129 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Button from './molecules/Button.astro';
+import Logo from './molecules/Logo.astro';
+import LinkList from './molecules/LinkList.astro';
+import SubscriptionForm from './molecules/SubscriptionForm.astro';
+import SocialLinks from './molecules/SocialLinks.astro';
+
+interface LogoComponent {
+  image?: {
+    url: string;
+    alternativeText?: string;
+  };
+  url?: string;
+}
+
+interface LinkComponent {
+  text: string;
+  url: string;
+  target?: '_self' | '_blank';
+}
+
+interface LinkColumnComponent {
+  title: string;
+  links?: LinkComponent[];
+}
+
+interface ButtonComponent {
+  text: string;
+  url?: string;
+  style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+}
+
+interface SocialLinkComponent {
+  platform: 'facebook' | 'instagram' | 'twitter' | 'linkedin';
+  url: string;
+}
+
+interface FooterProps {
+  logo: LogoComponent;
+  linkColumns?: LinkColumnComponent[];
+  newsletterPlaceholder?: string;
+  newsletterAgreement?: string;
+  newsletterButton: ButtonComponent;
+  copyrightText?: string;
+  legalLinks?: LinkComponent[];
+  socialLinks?: SocialLinkComponent[];
+  spacing?: any;
+}
+
+export interface Props extends FooterProps {}
+
+const {
+  logo,
+  linkColumns = [],
+  newsletterPlaceholder = 'Enter your email',
+  newsletterAgreement,
+  newsletterButton,
+  copyrightText,
+  legalLinks = [],
+  socialLinks = [],
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="footer" spacing={spacing}>
+  <div class="bg-color-11 text-color-37">
+    <div class="container py-16 md:py-24">
+      <div class="flex flex-col lg:flex-row justify-between gap-10 lg:gap-12">
+        <div class="flex flex-col sm:flex-row gap-8 sm:gap-16 lg:gap-24">
+          <div class="flex-shrink-0">
+            <Logo
+              image={logo.image}
+              url={logo.url}
+            />
+          </div>
+          {linkColumns && linkColumns.length > 0 && (
+            <div class="flex flex-col gap-8 sm:flex-row sm:gap-16 lg:gap-24">
+              {linkColumns.map((column) => (
+                <LinkList
+                  title={column.title}
+                  links={column.links}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+        <div class="lg:w-[350px] flex-shrink-0">
+          <SubscriptionForm
+            placeholder={newsletterPlaceholder}
+            buttonLabel={newsletterButton.text}
+            buttonUrl={newsletterButton.url}
+            buttonStyle={newsletterButton.style}
+            legalText={newsletterAgreement}
+          />
+        </div>
+      </div>
+
+      <hr class="border-t border-solid border-color-38 my-10 md:my-12" />
+
+      <div class="flex flex-col-reverse md:flex-row justify-between items-center gap-8">
+        <div class="flex flex-col sm:flex-row items-center gap-y-4 gap-x-6 text-center">
+          {copyrightText && (
+            <p class="font-font-3 text-sm leading-lh-14 text-color-41">
+              {copyrightText}
+            </p>
+          )}
+          {legalLinks && legalLinks.length > 0 && (
+            <nav class="flex flex-wrap justify-center gap-y-2 gap-x-6">
+              {legalLinks.map((link) => (
+                <a
+                  href={link.url}
+                  target={link.target || '_self'}
+                  class="font-font-3 text-sm leading-lh-14 text-color-41 underline hover:text-color-37 transition-colors duration-300 cursor-pointer"
+                >
+                  {link.text}
+                </a>
+              ))}
+            </nav>
+          )}
+        </div>
+        {socialLinks && socialLinks.length > 0 && (
+          <SocialLinks links={socialLinks} />
+        )}
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>

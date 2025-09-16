@@ -1,0 +1,54 @@
+---
+import { assetsPath } from '../../utils/strapi';
+import Image from './Image.astro';
+
+interface Logo {
+  image?: {
+    url: string;
+    alternativeText?: string;
+  };
+  url?: string;
+}
+
+interface LogoCloudProps {
+  title?: string;
+  logos?: Logo[];
+}
+
+export interface Props extends LogoCloudProps {}
+
+const { title, logos = [] } = Astro.props;
+---
+
+<div class="w-full">
+  {title && (
+    <h3 class="font-font-7 font-medium text-lg md:text-xl leading-lh-10 text-color-37 text-center max-w-md mx-auto mb-8 md:mb-12">
+      {title}
+    </h3>
+  )}
+  {logos.length > 0 && (
+    <div class="flex flex-wrap justify-center items-center gap-8 md:gap-x-16">
+      {logos.map((logo) => (
+        <div class="flex items-center justify-center" aria-label={logo.image?.alternativeText || 'Company logo'}>
+          {logo.image?.url && (
+            logo.url ? (
+              <a href={logo.url} target="_blank" rel="noopener noreferrer">
+                <Image 
+                  src={assetsPath(logo.image.url) || ''} 
+                  alt={logo.image.alternativeText || 'Company logo'} 
+                  className="max-h-6 md:max-h-7 w-auto object-contain" 
+                />
+              </a>
+            ) : (
+              <Image 
+                src={assetsPath(logo.image.url) || ''} 
+                alt={logo.image.alternativeText || 'Company logo'} 
+                className="max-h-6 md:max-h-7 w-auto object-contain" 
+              />
+            )
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+</div>

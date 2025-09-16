@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_modules_blog_grids",
+  "info": {
+    "displayName": "Blog Grid",
+    "description": "Showcase section for blog posts in a grid format with automatic or manual post selection"
+  },
+  "options": {},
+  "attributes": {
+    "preheading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "fetchLatest": {
+      "type": "boolean",
+      "default": true,
+      "required": false
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::post.post",
+      "required": false
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button",
+      "required": true
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

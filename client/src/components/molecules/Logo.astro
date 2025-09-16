@@ -1,0 +1,28 @@
+---
+import { assetsPath } from '../../utils/strapi';
+
+interface LogoProps {
+  image?: {
+    url: string;
+    alternativeText?: string;
+  };
+  url?: string;
+}
+
+export interface Props extends LogoProps {}
+
+const { image, url = '/' } = Astro.props;
+---
+
+<a href={url} class="flex items-center gap-2 lg:gap-2.5 no-underline cursor-pointer">
+  {image?.url && (
+    <img 
+      src={assetsPath(image.url) || ''} 
+      alt={image.alternativeText || 'Logo'} 
+      class="h-6 lg:h-8 w-auto" 
+    />
+  )}
+  <span class="font-font-3 font-bold text-lg lg:text-size-3 leading-none tracking-tracking-2 text-color-5">
+    TrailHive
+  </span>
+</a>

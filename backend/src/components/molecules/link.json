@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_molecules_links",
+  "info": {
+    "displayName": "Link",
+    "icon": "link",
+    "description": "An atomic component for a single hyperlink with text, URL, and target attributes."
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "maxLength": 500
+    },
+    "target": {
+      "type": "enumeration",
+      "enum": [
+        "_self",
+        "_blank"
+      ],
+      "required": false,
+      "default": "_self"
+    }
+  }
+}

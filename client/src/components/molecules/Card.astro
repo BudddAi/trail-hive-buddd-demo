@@ -1,0 +1,83 @@
+---
+import { assetsPath } from '../../utils/strapi';
+import Image from './Image.astro';
+import Tag from './Tag.astro';
+import TextLink from './TextLink.astro';
+
+interface CardProps {
+  variant?: 'vertical' | 'horizontal';
+  imageSrc?: string;
+  imageAlt?: string;
+  category?: string;
+  readTime?: string;
+  title: string;
+  description?: string;
+  linkHref?: string;
+}
+
+export interface Props extends CardProps {}
+
+const {
+  variant = 'vertical',
+  imageSrc,
+  imageAlt,
+  category,
+  readTime,
+  title,
+  description,
+  linkHref = '#'
+} = Astro.props;
+---
+
+{variant === 'horizontal' ? (
+  <div class="bg-white rounded-radius-3 p-4 lg:p-6 flex flex-col md:flex-row gap-4 md:gap-6 items-start">
+    <a href={linkHref} class="block cursor-pointer group w-full md:w-[40%] lg:w-[255px] flex-shrink-0">
+      <div class="overflow-hidden rounded-lg">
+        {imageSrc && (
+          <Image
+            src={assetsPath(imageSrc) || ''}
+            alt={imageAlt || title}
+            className="w-full h-full object-cover aspect-[4/3] md:aspect-square group-hover:scale-105 transition-transform duration-300"
+          />
+        )}
+      </div>
+    </a>
+    <div class="flex flex-col gap-4 flex-grow">
+      <div class="flex items-center gap-4 flex-wrap">
+        {category && <Tag label={category} />}
+        {readTime && <span class="text-color-5 font-font-3 font-semibold text-sm leading-6">{readTime}</span>}
+      </div>
+      <div class="flex flex-col gap-2">
+        <a href={linkHref} class="no-underline cursor-pointer">
+          <h3 class="text-color-5 font-font-3 font-bold text-xl md:text-2xl leading-tight hover:text-color-17 transition-colors duration-300">{title}</h3>
+        </a>
+        {description && description.trim() && (
+          <p class="text-color-5 font-font-3 font-normal text-base leading-6 line-clamp-3">{description}</p>
+        )}
+      </div>
+      <TextLink text="Read more" href={linkHref} />
+    </div>
+  </div>
+) : (
+  <div class="flex flex-col gap-6 text-left">
+    <a href={linkHref} class="block cursor-pointer group">
+      <div class="overflow-hidden rounded-radius-3">
+        {imageSrc && (
+          <Image 
+            src={assetsPath(imageSrc) || ''}
+            alt={imageAlt || title}
+            className="w-full h-full object-cover aspect-[280/373] group-hover:scale-105 transition-transform duration-300"
+          />
+        )}
+      </div>
+    </a>
+    <div class="flex flex-col gap-4">
+      <a href={linkHref} class="no-underline cursor-pointer">
+        <h3 class="font-font-3 font-semibold text-base leading-lh-9 text-color-5 hover:text-color-17 transition-colors duration-300">{title}</h3>
+      </a>
+      {description && description.trim() && (
+        <p class="font-font-3 font-normal text-sm leading-lh-16 text-color-5">{description}</p>
+      )}
+    </div>
+  </div>
+)}

@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_molecules_link_columns",
+  "info": {
+    "displayName": "Link Column",
+    "icon": "link",
+    "description": "Component for a column of links with a title, used in footers or sidebars."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.link"
+    }
+  }
+}

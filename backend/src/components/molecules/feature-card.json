@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_molecules_feature_cards",
+  "info": {
+    "displayName": "Feature Card",
+    "icon": "star",
+    "description": "Component for a feature item with an icon, title, and description."
+  },
+  "options": {},
+  "attributes": {
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

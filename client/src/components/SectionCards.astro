@@ -1,0 +1,73 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import FeatureCard from './molecules/FeatureCard.astro';
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface InfoCard {
+  title: string;
+  description?: string;
+  image?: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  layout?: 'text_top' | 'text_left' | 'text_right';
+  width?: 'half' | 'full';
+}
+
+interface SectionCardsProps {
+  heading: HeadingComponent;
+  cards?: InfoCard[];
+  isVisible?: boolean;
+  spacing?: any;
+}
+
+export interface Props extends SectionCardsProps {}
+
+const { 
+  heading,
+  cards = [],
+  isVisible = true,
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="section-cards" spacing={spacing}>
+  {isVisible && (
+    <div class="bg-color-37 py-16 md:py-20 lg:py-space-8">
+      <div class="container">
+        <Heading 
+          text={heading.text}
+          tag={heading.tag || 'h2'}
+          subheading={heading.subheading}
+          preheading={heading.preheading}
+          className="text-center mb-10 md:mb-12 lg:mb-16 max-w-4xl mx-auto"
+          headingClassName="font-font-3 font-bold text-size-4 md:text-size-6 lg:text-size-7 leading-lh-3 text-color-5"
+        />
+        {cards && cards.length > 0 && (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+            {cards.map((card) => (
+              <FeatureCard
+                title={card.title}
+                description={card.description}
+                image={card.image}
+                layout={card.layout || 'text_top'}
+                width={card.width || 'half'}
+                className={card.width === 'full' ? 'md:col-span-2' : ''}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</ModuleWrapper>

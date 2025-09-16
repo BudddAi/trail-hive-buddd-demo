@@ -1,0 +1,45 @@
+---
+interface HeadingProps {
+  preheading?: string;
+  heading?: string;
+  subheading?: string;
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  className?: string;
+  headingClassName?: string;
+  subheadingClassName?: string;
+}
+
+export interface Props extends HeadingProps {}
+
+const { 
+  preheading, 
+  heading, 
+  subheading, 
+  as: Component = 'h2', 
+  className = '', 
+  headingClassName, 
+  subheadingClassName 
+} = Astro.props;
+
+const defaultHeadingClasses = "font-font-3 font-semibold text-size-4 md:text-size-5 leading-lh-5 text-color-5";
+const defaultSubheadingClasses = "font-font-3 font-normal text-base md:text-lg leading-relaxed text-color-5";
+---
+
+<div class={`flex flex-col gap-4 ${className}`}>
+  {preheading && (
+    <span class="font-font-3 font-normal text-sm leading-6 text-color-5 uppercase tracking-tracking-4">
+      {preheading}
+    </span>
+  )}
+  {heading && (
+    <Component 
+      class={headingClassName || defaultHeadingClasses}
+      set:html={heading}
+    />
+  )}
+  {subheading && (
+    <p class={subheadingClassName || defaultSubheadingClasses}>
+      {subheading}
+    </p>
+  )}
+</div>

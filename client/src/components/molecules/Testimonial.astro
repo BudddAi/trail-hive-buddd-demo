@@ -1,0 +1,31 @@
+---
+interface TestimonialProps {
+  preheading?: string;
+  quote?: string;
+  author?: string;
+}
+
+export interface Props extends TestimonialProps {}
+
+const { preheading, quote, author } = Astro.props;
+---
+
+<div class="max-w-5xl w-full text-center md:text-left">
+  {preheading && (
+    <p class="font-font-3 font-normal text-sm leading-lh-14 tracking-tracking-4 uppercase text-color-37 mb-4 md:mb-6">
+      {preheading}
+    </p>
+  )}
+  {quote && (
+    <blockquote class="not-italic">
+      <p class="font-font-3 font-bold text-2xl sm:text-3xl md:text-5xl leading-lh-1 tracking-tracking-1 text-color-37">
+        {quote}
+      </p>
+    </blockquote>
+  )}
+  {author && (
+    <p class="font-font-3 font-bold text-xl md:text-2xl leading-lh-5 text-color-37 mt-6 md:mt-8">
+      {author}
+    </p>
+  )}
+</div>

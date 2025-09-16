@@ -1,0 +1,58 @@
+{
+  "collectionName": "components_molecules_detailed_pricing_cards",
+  "info": {
+    "displayName": "Detailed Pricing Card",
+    "icon": "credit-card",
+    "description": "Component for a single pricing plan card with monthly/yearly options."
+  },
+  "options": {},
+  "attributes": {
+    "planName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "monthlyPrice": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "yearlyPrice": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "billingCycleMonthly": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "billingCycleYearly": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "includesText": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "features": {
+      "type": "richtext",
+      "required": false
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import Button from './molecules/Button.astro';
+import Image from './molecules/Image.astro';
+
+interface HeroProps {
+  heading: {
+    text: string;
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    subheading?: string;
+    preheading?: string;
+  };
+  description?: string;
+  button: {
+    text: string;
+    url?: string;
+    style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+  };
+  image: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  spacing?: any;
+}
+
+export interface Props extends HeroProps {}
+
+const { 
+  heading, 
+  description, 
+  button, 
+  image, 
+  spacing 
+} = Astro.props;
+
+const headingClasses = "font-font-3 font-bold text-5xl md:text-7xl lg:text-size-10 leading-tight lg:leading-none tracking-tracking-3 text-color-37";
+const subheadingClasses = "font-font-3 font-normal text-base md:text-lg leading-lh-16 text-color-37";
+---
+
+<ModuleWrapper className="hero" spacing={spacing}>
+  <div class="bg-color-11">
+    <div class="container">
+      <div class="flex flex-col lg:flex-row items-center gap-y-12 lg:gap-x-24 py-12 md:py-16 lg:py-24">
+        <div class="lg:w-1/2 w-full flex flex-col items-center text-center lg:items-start lg:text-left gap-8">
+          {heading && (
+            <Heading
+              as={heading.tag || 'h1'}
+              heading={heading.text}
+              subheading={heading.subheading}
+              preheading={heading.preheading}
+              headingClassName={headingClasses}
+              subheadingClassName={subheadingClasses}
+            />
+          )}
+          {description && description.trim() && (
+            <div class="prose max-w-none" set:html={description} />
+          )}
+          {button && button.text && (
+            <Button
+              label={button.text}
+              href={button.url || '#'}
+              variant={button.style || 'solid-green'}
+              className="w-full sm:w-auto"
+            />
+          )}
+        </div>
+        <div class="lg:w-1/2 w-full">
+          {image?.url && (
+            <Image
+              src={assetsPath(image.url) || ''}
+              alt={image.alternativeText || 'Hero image'}
+              className="w-full rounded-radius-3 lg:rounded-radius-5 aspect-square object-cover"
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>

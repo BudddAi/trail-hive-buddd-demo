@@ -1,0 +1,131 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import Image from './molecules/Image.astro';
+import AccordionItem from './molecules/AccordionItem.astro';
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface FeatureAccordionItem {
+  title: string;
+  description?: string;
+}
+
+interface StatsWithImageProps {
+  heading: HeadingComponent;
+  description?: string;
+  features?: FeatureAccordionItem[];
+  image: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  imagePosition?: 'left' | 'right';
+  spacing?: any;
+}
+
+export interface Props extends StatsWithImageProps {}
+
+const { 
+  heading,
+  description,
+  features = [],
+  image,
+  imagePosition = 'right',
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="stats-with-image" spacing={spacing}>
+  <div class="bg-color-37 py-16 lg:py-24">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div class={imagePosition === 'left' ? 'lg:order-2' : ''}>
+          <div class="flex flex-col justify-center">
+            {heading && (
+              <Heading 
+                preheading={heading.preheading}
+                heading={heading.text}
+                subheading={heading.subheading}
+                as={heading.tag || 'h2'}
+                className="mb-8 gap-6"
+                headingClassName="font-font-6 font-semibold text-size-4 lg:text-size-6 leading-lh-10 text-color-5"
+                subheadingClassName="font-font-3 font-normal text-base lg:text-lg leading-lh-16 text-color-5"
+              />
+            )}
+            {description && description.trim() && (
+              <div class="font-font-3 font-normal text-base lg:text-lg leading-lh-16 text-color-5 mb-8" set:html={description} />
+            )}
+            {features && features.length > 0 && (
+              <div class="flex flex-col accordion-container">
+                {features.map((feature, index) => (
+                  <AccordionItem
+                    title={feature.title}
+                    content={feature.description || ''}
+                    index={index}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div class={imagePosition === 'left' ? 'lg:order-1' : ''}>
+          {image?.url && (
+            <div class="bg-color-34 p-6 lg:p-10 rounded-radius-3">
+              <Image 
+                src={assetsPath(image.url) || ''}
+                alt={image.alternativeText || 'Stats illustration'}
+                className="w-full h-auto rounded-lg"
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    const accordionContents = document.querySelectorAll('.accordion-content');
+    const accordionChevrons = document.querySelectorAll('.accordion-chevron');
+    
+    // Set first item as open by default
+    if (accordionContents.length > 0) {
+      accordionContents[0].style.height = 'auto';
+      accordionContents[0].style.opacity = '1';
+      accordionChevrons[0].style.transform = 'rotate(180deg)';
+    }
+    
+    accordionButtons.forEach((button, buttonIndex) => {
+      button.addEventListener('click', () => {
+        const targetIndex = parseInt(button.dataset.index);
+        const targetContent = accordionContents[targetIndex];
+        const targetChevron = accordionChevrons[targetIndex];
+        const isCurrentlyOpen = targetContent.style.height === 'auto' || targetContent.style.height !== '0px';
+        
+        // Close all accordion items
+        accordionContents.forEach((content, index) => {
+          content.style.height = '0px';
+          content.style.opacity = '0';
+          accordionChevrons[index].style.transform = 'rotate(0deg)';
+        });
+        
+        // If the clicked item wasn't open, open it
+        if (!isCurrentlyOpen) {
+          targetContent.style.height = 'auto';
+          targetContent.style.opacity = '1';
+          targetChevron.style.transform = 'rotate(180deg)';
+        }
+      });
+    });
+  });
+</script>

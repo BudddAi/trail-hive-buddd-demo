@@ -1,0 +1,100 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import Image from './molecules/Image.astro';
+import Button from './molecules/Button.astro';
+
+interface HeroStackProps {
+  mainHeading: {
+    text: string;
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    subheading?: string;
+    preheading?: string;
+  };
+  backgroundImage: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  overlayHeading: {
+    text: string;
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    subheading?: string;
+    preheading?: string;
+  };
+  overlayDescription: string;
+  overlayButton: {
+    text: string;
+    url?: string;
+    style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+  };
+  spacing?: any;
+}
+
+export interface Props extends HeroStackProps {}
+
+const { 
+  mainHeading,
+  backgroundImage,
+  overlayHeading,
+  overlayDescription,
+  overlayButton,
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="hero-stack" spacing={spacing}>
+  <div class="bg-color-37 py-12 md:py-16 lg:py-24">
+    <div class="container">
+      {mainHeading && mainHeading.text && (
+        <div class="text-center max-w-4xl mx-auto">
+          <Heading
+            as={mainHeading.tag || 'h1'}
+            heading={mainHeading.text}
+            subheading={mainHeading.subheading}
+            preheading={mainHeading.preheading}
+            headingClassName="font-font-3 font-semibold text-3xl sm:text-4xl md:text-5xl leading-lh-5 text-color-5"
+          />
+        </div>
+      )}
+
+      <div class="mt-8 md:mt-12 lg:mt-16 flex flex-col items-center">
+        {backgroundImage?.url && (
+          <div class="w-full max-w-6xl">
+            <Image
+              src={assetsPath(backgroundImage.url) || ''}
+              alt={backgroundImage.alternativeText || 'Hero background'}
+              className="w-full h-auto object-cover rounded-radius-5 shadow-lg"
+            />
+          </div>
+        )}
+        
+        {(overlayHeading?.text || overlayDescription || overlayButton?.text) && (
+          <div class="bg-color-5 rounded-radius-5 p-6 sm:p-8 md:p-12 lg:p-16 text-center shadow-2xl w-[90%] sm:w-full max-w-4xl -mt-16 sm:-mt-24 md:-mt-32 lg:-mt-40 relative z-10">
+            {overlayHeading?.text && (
+              <Heading
+                as={overlayHeading.tag || 'h2'}
+                heading={overlayHeading.text}
+                subheading={overlayDescription}
+                preheading={overlayHeading.preheading}
+                className="items-center"
+                headingClassName="font-font-3 font-medium text-3xl md:text-4xl lg:text-size-9 leading-tight lg:leading-lh-7 text-color-37"
+                subheadingClassName="font-font-3 font-normal text-base lg:text-size-2 leading-relaxed lg:leading-lh-18 text-color-41 mt-4 max-w-2xl mx-auto"
+              />
+            )}
+            {overlayButton?.text && (
+              <Button
+                label={overlayButton.text}
+                href={overlayButton.url || '#'}
+                variant={overlayButton.style || 'solid-green'}
+                className="mt-6 md:mt-8"
+              />
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>

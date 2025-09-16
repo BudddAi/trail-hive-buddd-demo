@@ -1,0 +1,97 @@
+---
+import { assetsPath } from '../../utils/strapi';
+import Image from './Image.astro';
+import Button from './Button.astro';
+import FeatureListItem from './FeatureListItem.astro';
+
+interface ButtonComponent {
+  text: string;
+  url?: string;
+  style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+}
+
+interface PricingCardProps {
+  planName: string;
+  monthlyPrice?: string;
+  yearlyPrice?: string;
+  billingCycleMonthly?: string;
+  billingCycleYearly?: string;
+  includesText?: string;
+  features?: string;
+  button?: ButtonComponent;
+  icon?: {
+    url: string;
+    alternativeText?: string;
+  };
+}
+
+export interface Props extends PricingCardProps {}
+
+const { 
+  planName,
+  monthlyPrice,
+  yearlyPrice,
+  billingCycleMonthly = '/mo',
+  billingCycleYearly = '/yr',
+  includesText,
+  features,
+  button,
+  icon
+} = Astro.props;
+
+// Parse features from rich text to array
+let featuresList: string[] = [];
+if (features && features.trim()) {
+  // Extract text from HTML list items or paragraphs
+  const tempDiv = features.replace(/<li[^>]*>/g, '').replace(/<\/li>/g, '\n').replace(/<[^>]*>/g, '');
+  featuresList = tempDiv.split('\n').filter(item => item.trim().length > 0).map(item => item.trim());
+}
+---
+
+<div class="relative bg-color-55 rounded-radius-5 p-6 md:p-8 flex flex-col h-full" data-pricing-card>
+  {icon?.url && (
+    <Image 
+      src={assetsPath(icon.url) || ''} 
+      alt={icon.alternativeText || 'Plan icon'} 
+      className="absolute top-6 right-6 md:top-8 md:right-8 w-10 h-10" 
+    />
+  )}
+  <div class="flex-grow">
+    <div class="pr-16 md:pr-20">
+      {planName && <h3 class="font-font-3 font-bold text-xl leading-snug text-color-5">{planName}</h3>}
+      <div class="mt-2">
+        {monthlyPrice && (
+          <p class="font-font-3 font-bold text-3xl md:text-size-4 leading-lh-9 text-color-5" data-monthly-price>
+            {monthlyPrice}{billingCycleMonthly}
+          </p>
+        )}
+        {yearlyPrice && (
+          <p class="font-font-3 font-bold text-3xl md:text-size-4 leading-lh-9 text-color-5" data-yearly-price style="display: none;">
+            {yearlyPrice}{billingCycleYearly}
+          </p>
+        )}
+      </div>
+    </div>
+    <hr class="my-6 border-t border-solid border-color-6" />
+    <div>
+      {includesText && <p class="font-font-5 font-normal text-base leading-6 text-color-5 mb-4">{includesText}</p>}
+      {featuresList.length > 0 && (
+        <ul class="flex flex-col gap-3 list-none p-0">
+          {featuresList.map((feature) => (
+            <FeatureListItem text={feature} />
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
+  {button && button.text && (
+    <div class="mt-8">
+      <Button 
+        label={button.text} 
+        href={button.url || '#'} 
+        variant={button.style || 'solid-dark'} 
+        className="w-full" 
+      />
+    </div>
+  )}
+</div>

@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_molecules_logos",
+  "info": {
+    "displayName": "Logo",
+    "icon": "picture",
+    "description": "Component for the site logo, containing an image and a URL."
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "url": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    }
+  }
+}

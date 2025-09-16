@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_modules_full_width_banners",
+  "info": {
+    "displayName": "Full Width Banner",
+    "description": "Prominent visual component with full-width image and compelling headline that captures user attention"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "backgroundColor": {
+      "type": "enumeration",
+      "enum": [
+        "light-green",
+        "white",
+        "gray"
+      ],
+      "default": "light-green",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

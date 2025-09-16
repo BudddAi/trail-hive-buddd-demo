@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_modules_pricings",
+  "info": {
+    "displayName": "Pricing",
+    "description": "Pricing section with monthly/yearly toggle and pricing plan cards"
+  },
+  "options": {},
+  "attributes": {
+    "tagline": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "monthlyLabel": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "yearlyLabel": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "pricingPlans": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.detailed-pricing-card",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

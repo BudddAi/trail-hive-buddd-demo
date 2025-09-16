@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_molecules_buttons",
+  "info": {
+    "displayName": "Button",
+    "icon": "cursor-pointer",
+    "description": "Reusable button component for CTAs."
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "url": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "style": {
+      "type": "enumeration",
+      "enum": [
+        "solid-dark",
+        "outline-dark",
+        "ghost",
+        "outline-light",
+        "solid-light",
+        "solid-green"
+      ],
+      "required": false,
+      "default": "solid-dark"
+    }
+  }
+}

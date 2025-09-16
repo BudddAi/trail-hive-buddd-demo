@@ -1,0 +1,68 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Testimonial from './molecules/Testimonial.astro';
+import LogoCloud from './molecules/LogoCloud.astro';
+
+interface Logo {
+  image?: {
+    url: string;
+    alternativeText?: string;
+  };
+  url?: string;
+}
+
+interface QuoteProps {
+  preheading?: string;
+  quote?: string;
+  author?: string;
+  logosTitle?: string;
+  logos?: Logo[];
+  backgroundImage?: {
+    url: string;
+    alternativeText?: string;
+  };
+  spacing?: any;
+}
+
+export interface Props extends QuoteProps {}
+
+const {
+  preheading,
+  quote,
+  author,
+  logosTitle,
+  logos = [],
+  backgroundImage,
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="quote" spacing={spacing}>
+  <div class="relative bg-color-11">
+    {backgroundImage?.url && (
+      <img
+        src={assetsPath(backgroundImage.url) || ''}
+        alt={backgroundImage.alternativeText || 'Abstract background pattern'}
+        class="absolute inset-0 w-full h-full object-cover z-0"
+      />
+    )}
+    <div class="relative z-10 container mx-auto py-16 md:py-20 lg:py-28">
+      <div class="flex flex-col items-center gap-y-16 md:gap-y-20 lg:gap-y-24">
+        {(preheading || quote || author) && (
+          <Testimonial
+            preheading={preheading}
+            quote={quote}
+            author={author}
+          />
+        )}
+        {(logosTitle || logos?.length > 0) && (
+          <LogoCloud
+            title={logosTitle}
+            logos={logos}
+          />
+        )}
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>

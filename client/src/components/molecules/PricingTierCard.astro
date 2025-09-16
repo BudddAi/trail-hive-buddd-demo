@@ -1,0 +1,67 @@
+---
+import Button from './Button.astro';
+
+interface ButtonComponent {
+  text: string;
+  url?: string;
+  style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+}
+
+interface PricingTierCardProps {
+  planName: string;
+  price: string;
+  billingCycle?: string;
+  description?: string;
+  button?: ButtonComponent;
+  className?: string;
+}
+
+export interface Props extends PricingTierCardProps {}
+
+const { 
+  planName, 
+  price, 
+  billingCycle, 
+  description, 
+  button, 
+  className = '' 
+} = Astro.props;
+---
+
+<div class={`p-6 lg:p-8 flex flex-col items-start gap-4 ${className}`}>
+  {planName && (
+    <h3 class="font-lato font-bold text-xl leading-lh-13 text-color-5">
+      {planName}
+    </h3>
+  )}
+  
+  {price && (
+    <div class="flex items-baseline gap-2">
+      <span class="font-lato font-extrabold text-5xl lg:text-size-8 leading-tight lg:leading-lh-6 text-color-5">
+        {price}
+      </span>
+      {billingCycle && (
+        <span class="font-lato font-bold text-base leading-6 text-color-5">
+          {billingCycle}
+        </span>
+      )}
+    </div>
+  )}
+  
+  {description && (
+    <p class="font-lato font-normal text-base leading-6 text-color-5">
+      {description}
+    </p>
+  )}
+  
+  {button && button.text && (
+    <div class="mt-4">
+      <Button 
+        label={button.text} 
+        href={button.url || '#'} 
+        variant={button.style || 'solid-dark'} 
+        className="!px-10 !py-3 !rounded-lg" 
+      />
+    </div>
+  )}
+</div>

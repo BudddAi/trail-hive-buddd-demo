@@ -1,0 +1,61 @@
+{
+  "collectionName": "components_modules_left_rights",
+  "info": {
+    "displayName": "Left Right",
+    "description": "Flexible two-column component that displays an image alongside textual content with configurable positioning"
+  },
+  "options": {},
+  "attributes": {
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "imagePosition": {
+      "type": "enumeration",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "default": "left",
+      "required": false
+    },
+    "preheading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "accordionItems": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.feature-accordion-item",
+      "required": false
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_modules_cards",
+  "info": {
+    "displayName": "Cards",
+    "description": "Feature section with content block and grid of feature cards highlighting key benefits or aspects"
+  },
+  "options": {},
+  "attributes": {
+    "preHeading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": false
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button",
+      "required": false
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.feature-image-card",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

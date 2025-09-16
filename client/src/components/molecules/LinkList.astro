@@ -1,0 +1,39 @@
+---
+interface LinkComponent {
+  text: string;
+  url: string;
+  target?: '_self' | '_blank';
+}
+
+interface LinkListProps {
+  title: string;
+  links?: LinkComponent[];
+}
+
+export interface Props extends LinkListProps {}
+
+const { title, links = [] } = Astro.props;
+---
+
+<div>
+  {title && (
+    <h3 class="font-font-3 font-medium text-base leading-lh-9 text-color-37 mb-4">
+      {title}
+    </h3>
+  )}
+  {links && links.length > 0 && (
+    <ul class="list-none p-0 m-0 flex flex-col gap-3">
+      {links.map((link) => (
+        <li>
+          <a
+            href={link.url}
+            target={link.target || '_self'}
+            class="font-font-3 text-sm leading-lh-16 text-color-41 no-underline hover:text-color-37 transition-colors duration-300 cursor-pointer"
+          >
+            {link.text}
+          </a>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>

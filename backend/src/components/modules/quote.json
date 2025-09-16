@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_modules_quotes",
+  "info": {
+    "displayName": "Quote",
+    "description": "Customer testimonial section with quote and logo cloud to build social proof"
+  },
+  "options": {},
+  "attributes": {
+    "preheading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "quote": {
+      "type": "richtext",
+      "required": false
+    },
+    "author": {
+      "type": "string",
+      "required": false,
+      "maxLength": 200,
+      "minLength": 1
+    },
+    "logosTitle": {
+      "type": "text",
+      "required": false
+    },
+    "logos": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.logo"
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

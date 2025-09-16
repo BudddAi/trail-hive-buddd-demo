@@ -1,0 +1,92 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import ToggleSwitch from './molecules/ToggleSwitch.astro';
+import PricingCard from './molecules/PricingCard.astro';
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface ButtonComponent {
+  text: string;
+  url?: string;
+  style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+}
+
+interface DetailedPricingCard {
+  planName: string;
+  icon?: {
+    url: string;
+    alternativeText?: string;
+  };
+  monthlyPrice?: string;
+  yearlyPrice?: string;
+  billingCycleMonthly?: string;
+  billingCycleYearly?: string;
+  includesText?: string;
+  features?: string;
+  button?: ButtonComponent;
+}
+
+interface PricingProps {
+  tagline?: string;
+  heading: HeadingComponent;
+  monthlyLabel?: string;
+  yearlyLabel?: string;
+  pricingPlans?: DetailedPricingCard[];
+  spacing?: any;
+}
+
+export interface Props extends PricingProps {}
+
+const { 
+  tagline,
+  heading,
+  monthlyLabel = 'Monthly',
+  yearlyLabel = 'Yearly',
+  pricingPlans = [],
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="pricing" spacing={spacing}>
+  <div class="bg-color-37 py-16 md:py-24">
+    <div class="container">
+      <div class="max-w-3xl mx-auto text-center">
+        <Heading
+          preheading={tagline}
+          heading={heading?.text}
+          subheading={heading?.subheading}
+          as={heading?.tag || 'h2'}
+          headingClassName="font-font-3 font-bold text-4xl md:text-5xl leading-lh-5 text-color-5"
+          subheadingClassName="font-font-3 font-normal text-lg leading-relaxed text-color-5"
+        />
+      </div>
+      <div class="flex justify-center mt-8 md:mt-10">
+        <ToggleSwitch
+          options={[monthlyLabel, yearlyLabel]}
+        />
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-10 md:mt-12 max-w-5xl mx-auto items-start">
+        {pricingPlans && pricingPlans.length > 0 && pricingPlans.map((plan) => (
+          <PricingCard
+            planName={plan.planName}
+            monthlyPrice={plan.monthlyPrice}
+            yearlyPrice={plan.yearlyPrice}
+            billingCycleMonthly={plan.billingCycleMonthly}
+            billingCycleYearly={plan.billingCycleYearly}
+            includesText={plan.includesText}
+            features={plan.features}
+            button={plan.button}
+            icon={plan.icon}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>

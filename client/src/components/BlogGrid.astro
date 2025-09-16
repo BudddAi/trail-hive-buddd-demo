@@ -1,0 +1,130 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { fetchApi, assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import Card from './molecules/Card.astro';
+import Button from './molecules/Button.astro';
+
+interface Post {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  excerpt?: string;
+  featured_image?: {
+    url: string;
+    alternativeText?: string;
+  };
+  categories?: Array<{
+    id: number;
+    name: string;
+    slug: string;
+  }>;
+  publishedAt: string;
+}
+
+interface BlogGridProps {
+  preheading?: string;
+  heading: {
+    text: string;
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    subheading?: string;
+    preheading?: string;
+  };
+  description?: string;
+  fetchLatest?: boolean;
+  posts?: Post[];
+  button: {
+    text: string;
+    url?: string;
+    style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+  };
+  spacing?: any;
+}
+
+export interface Props extends BlogGridProps {}
+
+const {
+  preheading,
+  heading,
+  description,
+  fetchLatest = true,
+  posts = [],
+  button,
+  spacing
+} = Astro.props;
+
+let displayPosts: Post[] = [];
+
+if (fetchLatest) {
+  try {
+    displayPosts = await fetchApi<Post[]>({
+      endpoint: 'posts',
+      query: {
+        'pLevel': '5',
+        'sort': 'publishedAt:desc',
+        'pagination[limit]': '4'
+      },
+      wrappedByKey: 'data'
+    }) || [];
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    displayPosts = [];
+  }
+} else {
+  displayPosts = Array.isArray(posts) ? posts : [];
+}
+
+function calculateReadTime(content: string): string {
+  if (!content) return '5 min read';
+  const wordsPerMinute = 200;
+  const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length;
+  const readTime = Math.ceil(wordCount / wordsPerMinute);
+  return `${readTime} min read`;
+}
+---
+
+<ModuleWrapper className="blog-grid" spacing={spacing}>
+  <div class="bg-color-37">
+    <div class="container py-12 md:py-24">
+      <Heading
+        preheading={preheading || heading.preheading}
+        heading={heading.text}
+        subheading={description || heading.subheading}
+        as={heading.tag || 'h2'}
+        className="text-left md:text-center max-w-2xl md:mx-auto mb-8 md:mb-16"
+      />
+      
+      {displayPosts && displayPosts.length > 0 ? (
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+          {displayPosts.map(post => (
+            <Card
+              variant="horizontal"
+              imageSrc={post.featured_image?.url}
+              imageAlt={post.featured_image?.alternativeText || post.title}
+              category={post.categories?.[0]?.name}
+              readTime={calculateReadTime(post.excerpt || '')}
+              title={post.title}
+              description={post.excerpt}
+              linkHref={`/blog/${post.slug}`}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="text-center py-8">
+          <p class="text-color-5 font-font-3 text-lg">No posts available</p>
+        </div>
+      )}
+      
+      {button && button.text && (
+        <div class="text-center mt-8 md:mt-16">
+          <Button
+            label={button.text}
+            href={button.url || '#'}
+            variant={button.style || 'outline-dark'}
+          />
+        </div>
+      )}
+    </div>
+  </div>
+</ModuleWrapper>

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_molecules_feature_values",
+  "info": {
+    "displayName": "Feature Value",
+    "icon": "check-circle",
+    "description": "Component for a single feature value in the comparison table."
+  },
+  "options": {},
+  "attributes": {
+    "value": {
+      "type": "text",
+      "required": false
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "collectionName": "components_modules_stats_with_images",
+  "info": {
+    "displayName": "Stats With Image",
+    "description": "Two-column layout with textual content including heading, description, and accordion features alongside a supporting image"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.feature-accordion-item",
+      "required": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "imagePosition": {
+      "type": "enumeration",
+      "enum": [
+        "left",
+        "right"
+      ],
+      "default": "right",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

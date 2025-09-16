@@ -1,0 +1,42 @@
+---
+interface SocialLinkComponent {
+  platform: 'facebook' | 'instagram' | 'twitter' | 'linkedin';
+  url: string;
+}
+
+interface SocialLinksProps {
+  links: SocialLinkComponent[];
+}
+
+export interface Props extends SocialLinksProps {}
+
+const { links } = Astro.props;
+
+const iconMap = {
+  facebook: "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-817b-831d-e4caf51e13be/519:8758.svg",
+  instagram: "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-817b-831d-e4caf51e13be/519:8760.svg",
+  twitter: "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-817b-831d-e4caf51e13be/519:8762.svg",
+  linkedin: "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-817b-831d-e4caf51e13be/519:8764.svg",
+};
+---
+
+<nav>
+  <ul class="list-none p-0 m-0 flex items-center gap-4">
+    {links.map((link) => (
+      <li>
+        <a 
+          href={link.url} 
+          class="block cursor-pointer opacity-80 hover:opacity-100 transition-opacity duration-300" 
+          target="_blank" 
+          rel="noopener noreferrer"
+        >
+          <img 
+            src={iconMap[link.platform]} 
+            alt={`${link.platform} logo`} 
+            class="w-6 h-6" 
+          />
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

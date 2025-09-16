@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_molecules_social_links",
+  "info": {
+    "displayName": "Social Link",
+    "icon": "link",
+    "description": "Component for a single social media link, specifying the platform to determine the icon."
+  },
+  "options": {},
+  "attributes": {
+    "platform": {
+      "type": "enumeration",
+      "enum": [
+        "facebook",
+        "instagram",
+        "twitter",
+        "linkedin"
+      ],
+      "required": true
+    },
+    "url": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    }
+  }
+}

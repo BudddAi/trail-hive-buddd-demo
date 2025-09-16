@@ -1,1 +1,184 @@
+/* Auto-generated font imports for Tailwind CSS - MUST BE FIRST */
+/* Helvetica - System font, no import needed */
+/* Inter from Fontsource */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.2/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.2/500.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/inter@4.5.2/600.css');
+
+/* Lato from Fontsource */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/lato@4.5.2/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/lato@4.5.2/500.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/lato@4.5.2/600.css');
+
+/* Noto Sans from Fontsource */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@4.5.2/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@4.5.2/500.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/noto-sans@4.5.2/600.css');
+
+/* Roboto from Fontsource */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/roboto@4.5.2/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/roboto@4.5.2/500.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/roboto@4.5.2/600.css');
+
+/* Geist from Fontsource */
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@4.5.2/400.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@4.5.2/500.css');
+@import url('https://cdn.jsdelivr.net/npm/@fontsource/geist-sans@4.5.2/600.css');
+
+/* Graphik - Commercial font, assuming local installation */
+
 @import "tailwindcss";
+
+/* Tailwind CSS v4 Custom Theme Configuration */
+@theme {
+  /* Colors */
+  --color-color-1: #0000000d;
+  --color-color-2: #00000026;
+  --color-color-3: #00000033;
+  --color-color-4: #135C9F;
+  --color-color-5: #232E26;
+  --color-color-6: #232e261f;
+  --color-color-7: #232e2633;
+  --color-color-8: #232e264d;
+  --color-color-9: #232e2666;
+  --color-color-10: #242F27;
+  --color-color-11: #243027;
+  --color-color-12: #285b5226;
+  --color-color-13: #2D8DCA;
+  --color-color-14: #333333;
+  --color-color-15: #3333331a;
+  --color-color-16: #33333340;
+  --color-color-17: #398141;
+  --color-color-18: #433771;
+  --color-color-19: #493D75;
+  --color-color-20: #514E4C;
+  --color-color-21: #5AA449;
+  --color-color-22: #5DBBEA;
+  --color-color-23: #7298EC;
+  --color-color-24: #781D1D;
+  --color-color-25: #81C047;
+  --color-color-26: #8FBFFA;
+  --color-color-27: #929497;
+  --color-color-28: #949291;
+  --color-color-29: #A5CB39;
+  --color-color-30: #A72126;
+  --color-color-31: #A9D17B;
+  --color-color-32: #B9B2D6;
+  --color-color-33: #BAD9FF;
+  --color-color-34: #BFD9C9;
+  --color-color-35: #CFCBE2;
+  --color-color-36: #D9272D;
+  --color-color-37: #D9EFDE;
+  --color-color-38: #d9efde33;
+  --color-color-39: #d9efde4d;
+  --color-color-40: #d9efde80;
+  --color-color-41: #d9efdecc;
+  --color-color-42: #d9efdee6;
+  --color-color-43: #DDDCDB;
+  --color-color-44: #E46E59;
+  --color-color-45: #E47525;
+  --color-color-46: #ebfff04d;
+  --color-color-47: #ebfff080;
+  --color-color-48: #ebfff0cc;
+  --color-color-49: #F2F4F8;
+  --color-color-50: #F3BF17;
+  --color-color-51: #F5F5F6;
+  --color-color-52: #F9D167;
+  --color-color-53: #FF6F47;
+  --color-color-54: #FFCD0F;
+  --color-color-55: #FFFFFF;
+  --color-color-56: #ffffff1a;
+
+  /* Font Families */
+  --font-font-1: "Helvetica", sans-serif;
+  --font-font-2: "Inter", sans-serif;
+  --font-font-3: "Lato", sans-serif;
+  --font-font-4: "Noto Sans", sans-serif;
+  --font-font-5: "Roboto", sans-serif;
+  --font-font-6: "Geist", sans-serif;
+  --font-font-7: "Graphik", sans-serif;
+
+  /* Font Sizes */
+  --text-size-1: 14.899999618530273px;
+  --text-size-2: 16.5px;
+  --text-size-3: 22px;
+  --text-size-4: 32px;
+  --text-size-5: 38px;
+  --text-size-6: 40px;
+  --text-size-7: 40.5px;
+  --text-size-8: 56px;
+  --text-size-9: 65.69999694824219px;
+  --text-size-10: 85px;
+
+  /* Spacing */
+  --spacing-space-1: 2.882997989654541px;
+  --spacing-space-2: 9px;
+  --spacing-space-3: 17px;
+  --spacing-space-4: 50px;
+  --spacing-space-5: 59px;
+  --spacing-space-6: 60px;
+  --spacing-space-7: 95px;
+  --spacing-space-8: 100px;
+  --spacing-space-9: 119px;
+  --spacing-space-10: 168px;
+  --spacing-space-11: 220px;
+  --spacing-space-12: 625px;
+
+  /* Border Radius */
+  --radius-radius-1: 1px;
+  --radius-radius-2: 1.4414989948272705px;
+  --radius-radius-3: 20px;
+  --radius-radius-4: 39.62166976928711px;
+  --radius-radius-5: 40px;
+  --radius-radius-6: 50px;
+  --radius-radius-7: 60px;
+  --radius-radius-8: 100px;
+
+  /* Line Heights */
+  --spacing-lh-1: 1.1000000635782878em;
+  --spacing-lh-2: 1.125em;
+  --spacing-lh-3: 1.1851851851851851em;
+  --spacing-lh-4: 1.2em;
+  --spacing-lh-5: 1.2000000476837158em;
+  --spacing-lh-6: 1.2000000817435128em;
+  --spacing-lh-7: 1.2176560687365514em;
+  --spacing-lh-8: 1.2399999618530273em;
+  --spacing-lh-9: 1.2999999523162842em;
+  --spacing-lh-10: 1.3em;
+  --spacing-lh-11: 1.3333333333333333em;
+  --spacing-lh-12: 1.3999999364217122em;
+  --spacing-lh-13: 1.4em;
+  --spacing-lh-14: 1.5em;
+  --spacing-lh-15: 1.5999999727521623em;
+  --spacing-lh-16: 1.6000000635782878em;
+  --spacing-lh-17: 1.610738296271671em;
+  --spacing-lh-18: 1.6969696969697em;
+
+  /* Letter Spacing */
+  --tracking-tracking-1: -4.166666666666666%;
+  --tracking-tracking-2: -3%;
+  --tracking-tracking-3: -2%;
+  --tracking-tracking-4: 7.142857142857142%;
+}
+
+/* Container Configuration for Tailwind CSS v4 */
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  
+  @variant sm {
+    padding-inline: 1.5rem;
+  }
+  
+  @variant lg {
+    padding-inline: 2rem;
+  }
+  
+  @variant xl {
+    padding-inline: 2rem;
+  }
+  
+  @variant 2xl {
+    padding-inline: 2.5rem;
+  }
+}

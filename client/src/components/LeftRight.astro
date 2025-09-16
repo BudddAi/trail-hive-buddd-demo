@@ -1,0 +1,196 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Image from './molecules/Image.astro';
+import Heading from './molecules/Heading.astro';
+import AccordionItem from './molecules/AccordionItem.astro';
+import Button from './molecules/Button.astro';
+
+interface LeftRightProps {
+  image: {
+    url: string;
+    alternativeText?: string;
+  };
+  imagePosition?: 'left' | 'right';
+  preheading?: string;
+  heading: {
+    text: string;
+    tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+    subheading?: string;
+    preheading?: string;
+  };
+  description?: string;
+  accordionItems?: Array<{
+    title: string;
+    description?: string;
+  }>;
+  button?: {
+    text: string;
+    url?: string;
+    style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+  };
+  spacing?: any;
+}
+
+export interface Props extends LeftRightProps {}
+
+const {
+  image,
+  imagePosition = 'left',
+  preheading,
+  heading,
+  description,
+  accordionItems = [],
+  button,
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="left-right" spacing={spacing}>
+  <div class="bg-color-11 py-16 lg:py-24">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
+        {imagePosition === 'left' ? (
+          <>
+            <div>
+              {image?.url && (
+                <Image 
+                  src={assetsPath(image.url) || ''} 
+                  alt={image.alternativeText || 'Feature image'} 
+                  className="rounded-radius-5 w-full h-auto object-cover" 
+                />
+              )}
+            </div>
+            <div class="flex flex-col items-center text-center lg:items-start lg:text-left">
+              {(preheading || heading?.preheading) && (
+                <span class="font-font-3 text-sm leading-6 tracking-tracking-4 uppercase text-color-37 mb-4">
+                  {preheading || heading.preheading}
+                </span>
+              )}
+              {heading && (
+                <Heading
+                  heading={heading.text}
+                  subheading={heading.subheading || description}
+                  as={heading.tag || 'h2'}
+                  className="!gap-0"
+                  headingClassName="font-font-6 font-semibold text-3xl md:text-4xl lg:text-size-6 leading-lh-8 text-color-37"
+                  subheadingClassName="font-font-3 font-normal text-lg leading-lh-16 text-color-37 mt-4"
+                />
+              )}
+              {accordionItems && accordionItems.length > 0 && (
+                <div class="mt-8 w-full" id="accordion-container">
+                  {accordionItems.map((item, index) => (
+                    <AccordionItem
+                      title={item.title}
+                      content={item.description || ''}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              )}
+              {button && button.text && (
+                <div class="mt-10">
+                  <Button
+                    label={button.text}
+                    href={button.url || '#'}
+                    variant={button.style || 'solid-dark'}
+                  />
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <div class="flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-1">
+              {(preheading || heading?.preheading) && (
+                <span class="font-font-3 text-sm leading-6 tracking-tracking-4 uppercase text-color-37 mb-4">
+                  {preheading || heading.preheading}
+                </span>
+              )}
+              {heading && (
+                <Heading
+                  heading={heading.text}
+                  subheading={heading.subheading || description}
+                  as={heading.tag || 'h2'}
+                  className="!gap-0"
+                  headingClassName="font-font-6 font-semibold text-3xl md:text-4xl lg:text-size-6 leading-lh-8 text-color-37"
+                  subheadingClassName="font-font-3 font-normal text-lg leading-lh-16 text-color-37 mt-4"
+                />
+              )}
+              {accordionItems && accordionItems.length > 0 && (
+                <div class="mt-8 w-full" id="accordion-container">
+                  {accordionItems.map((item, index) => (
+                    <AccordionItem
+                      title={item.title}
+                      content={item.description || ''}
+                      index={index}
+                    />
+                  ))}
+                </div>
+              )}
+              {button && button.text && (
+                <div class="mt-10">
+                  <Button
+                    label={button.text}
+                    href={button.url || '#'}
+                    variant={button.style || 'solid-dark'}
+                  />
+                </div>
+              )}
+            </div>
+            <div class="order-1 lg:order-2">
+              {image?.url && (
+                <Image 
+                  src={assetsPath(image.url) || ''} 
+                  alt={image.alternativeText || 'Feature image'} 
+                  className="rounded-radius-5 w-full h-auto object-cover" 
+                />
+              )}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const accordionButtons = document.querySelectorAll('.accordion-button');
+    const accordionContents = document.querySelectorAll('.accordion-content');
+    
+    let openAccordion = 0;
+    
+    if (accordionContents.length > 0) {
+      accordionContents[0].style.height = 'auto';
+      accordionContents[0].style.opacity = '1';
+    }
+    
+    accordionButtons.forEach((button, index) => {
+      button.addEventListener('click', () => {
+        const content = accordionContents[index];
+        const chevron = button.querySelector('.accordion-chevron');
+        
+        if (openAccordion === index) {
+          content.style.height = '0';
+          content.style.opacity = '0';
+          chevron.style.transform = 'rotate(0deg)';
+          openAccordion = null;
+        } else {
+          accordionContents.forEach((item, i) => {
+            if (i === openAccordion) {
+              item.style.height = '0';
+              item.style.opacity = '0';
+              accordionButtons[i].querySelector('.accordion-chevron').style.transform = 'rotate(0deg)';
+            }
+          });
+          
+          content.style.height = 'auto';
+          content.style.opacity = '1';
+          chevron.style.transform = 'rotate(180deg)';
+          openAccordion = index;
+        }
+      });
+    });
+  });
+</script>
