@@ -1,0 +1,36 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ComponentRenderer from "../utils/ComponentRenderer.astro";
+import { fetchApi } from '../utils/strapi';
+
+export const prerender = true;
+export async function getStaticPaths() {
+  const pages = await fetchApi({
+    endpoint: 'pages?pLevel=5',
+    wrappedByKey: 'data',
+  });
+  
+
+  if (!pages || !Array.isArray(pages)) {
+    return [];
+  }
+
+  return pages.map((page) => ({
+    params: { slug: page.Slug },
+    props: page,
+  }));
+}
+
+const page = Astro.props;
+
+const pageTitle = page['Title'] || 'Page';
+const components = page['Body'] || [];
+
+
+---
+
+<Layout title={pageTitle}>
+  {components.length > 0 ? (
+    <ComponentRenderer components={components} />
+  ) : null}
+</Layout> 

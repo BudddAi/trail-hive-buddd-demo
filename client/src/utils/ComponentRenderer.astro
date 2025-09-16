@@ -1,0 +1,88 @@
+---
+// Auto-import all components from the components directory
+const componentModules = Object.values(import.meta.glob('../components/*.astro', { eager: true })) as Array<{
+  default: any;
+  file?: string;
+}>;
+
+// Create a component registry
+const componentRegistry: Record<string, any> = componentModules.reduce((acc, module) => {
+  // Extract component name from the module's file path
+  const componentName = module.file?.split('/').pop()?.replace('.astro', '') || '';
+  if (componentName) {
+    acc[componentName] = module.default;
+  }
+  return acc;
+}, {} as Record<string, any>);
+
+// Helper function to get component by name
+function getComponent(name: string) {
+  return componentRegistry[name];
+}
+
+// Auto-generate component name mapping based on available components
+const componentNameMap: Record<string, string> = Object.keys(componentRegistry).reduce((acc, componentName) => {
+  // Generate possible Strapi names for this component
+  const kebabCase = componentName.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^-/, '');
+  const strapiName = `modules.${kebabCase}`;
+  
+  acc[strapiName] = componentName;
+  return acc;
+}, {} as Record<string, string>);
+
+// Props interface
+interface Props {
+  components: Array<{
+    __component: string;
+    id: number;
+    [key: string]: any;
+  }>;
+}
+
+const { components } = Astro.props;
+---
+
+{components.map((component, index) => {
+  const componentType = component.__component;
+  
+  if (!componentType) {
+    console.warn('Component missing __component property');
+    return null;
+  }
+
+  // Get the Astro component name from the map
+  const astroComponentName = componentNameMap[componentType];
+  
+  if (!astroComponentName) {
+    console.warn(`No mapping found for component type: ${componentType}`);
+    return (
+      <div class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded">
+        <strong>Warning:</strong> No mapping found for component type: {componentType}
+        <br />
+        <small>Available mappings: {Object.keys(componentNameMap).join(', ')}</small>
+      </div>
+    );
+  }
+
+  // Get the actual Astro component
+  const AstroComponent = getComponent(astroComponentName);
+  
+  if (!AstroComponent) {
+    console.warn(`Component not found: ${astroComponentName}`);
+    return (
+      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <strong>Error:</strong> Component not found: {astroComponentName}
+        <br />
+        <small>Available components: {Object.keys(componentRegistry).join(', ')}</small>
+      </div>
+    );
+  }
+
+  // Extract all props except __component
+  const { __component, ...componentProps } = component;
+
+  // Render the component with all its props
+  return (
+    <AstroComponent {...componentProps} />
+  );
+})}

@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ComponentRenderer from "../utils/ComponentRenderer.astro";
+import { fetchApi } from '../utils/strapi';
+import type { HomePage } from "../utils/types";
+
+export const prerender = true;
+
+const home = await fetchApi<HomePage>({
+    endpoint: 'home?pLevel=5',
+    wrappedByKey: 'data',
+  });
+
+const pageTitle = 'Home Page';
+const components = home?.Body || [];
+---
+
+<Layout title={pageTitle} seo={home?.seo}>
+  {components.length > 0 ? (
+    <ComponentRenderer components={components} />
+  ) : null}
+</Layout>

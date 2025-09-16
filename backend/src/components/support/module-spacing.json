@@ -1,0 +1,79 @@
+{
+  "collectionName": "components_support_module_spacings",
+  "info": {
+    "displayName": "Module Spacing",
+    "icon": "brush"
+  },
+  "options": {},
+  "attributes": {
+    "linked_sides": {
+      "type": "boolean",
+      "required": true,
+      "default": true
+    },
+    "spacing": {
+      "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linked_sides"
+            },
+            true
+          ]
+        }
+      },
+      "default": "default",
+      "enum": [
+        "none",
+        "xl",
+        "large",
+        "default",
+        "small"
+      ]
+    },
+    "spacing_top": {
+      "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linked_sides"
+            },
+            false
+          ]
+        }
+      },
+      "default": "default",
+      "enum": [
+        "none",
+        "xl",
+        "large",
+        "default",
+        "small"
+      ]
+    },
+    "spacing_bottom": {
+      "type": "enumeration",
+      "conditions": {
+        "visible": {
+          "==": [
+            {
+              "var": "linked_sides"
+            },
+            false
+          ]
+        }
+      },
+      "default": "default",
+      "enum": [
+        "none",
+        "xl",
+        "large",
+        "default",
+        "small"
+      ]
+    }
+  },
+  "config": {}
+}

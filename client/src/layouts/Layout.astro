@@ -1,0 +1,80 @@
+---
+import '../styles/global.css';
+import ComponentRenderer from '../utils/ComponentRenderer.astro';
+import { fetchApi } from '../utils/strapi';
+import type { Seo } from '../utils/types';
+
+const STRAPI_URL = import.meta.env.STRAPI_URL;
+
+// Fetch global data (Header/Footer)
+const global = await fetchApi<{
+  Header?: Array<{
+    __component: string;
+    id: number;
+    [key: string]: any;
+  }>;
+  Footer?: Array<{
+    __component: string;
+    id: number;
+    [key: string]: any;
+  }>;
+}>({
+  endpoint: 'global?pLevel=5',
+  wrappedByKey: 'data',
+});
+
+export interface Props {
+  title: string;
+  description?: string;
+  seo?: Seo;
+}
+
+const { title, description = "Website", seo } = Astro.props;
+const seoTitle = seo?.metaTitle || title;
+const seoDescription = seo?.metaDescription || description;
+const seoImage = seo?.metaImage ? `${STRAPI_URL}${seo.metaImage.url}` : '';
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={seoDescription} />
+    <meta name="viewport" content={seo?.metaViewport || "width=device-width, initial-scale=1.0"} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{seoTitle}</title>
+
+    <!-- SEO Meta Tags -->
+    {seo?.keywords && <meta name="keywords" content={seo.keywords} />}
+    {seo?.metaRobots && <meta name="robots" content={seo.metaRobots} />}
+    {seo?.canonicalURL && <link rel="canonical" href={seo.canonicalURL} />}
+
+    <!-- Open Graph -->
+    {seo?.openGraph?.ogTitle && <meta property="og:title" content={seo.openGraph.ogTitle} />}
+    {seo?.openGraph?.ogDescription && <meta property="og:description" content={seo.openGraph.ogDescription} />}
+    {seo?.openGraph?.ogUrl && <meta property="og:url" content={seo.openGraph.ogUrl} />}
+    {seoImage && <meta property="og:image" content={seoImage} />}
+    {seo?.metaImage?.width && <meta property="og:image:width" content={seo.metaImage.width.toString()} />}
+    {seo?.metaImage?.height && <meta property="og:image:height" content={seo.metaImage.height.toString()} />}
+    {seo?.openGraph?.ogType && <meta property="og:type" content={seo.openGraph.ogType} />}
+
+    <!-- Structured Data -->
+    {seo?.structuredData && <script type="application/ld+json" set:html={JSON.stringify(seo.structuredData)} />}
+  </head>
+  <body class="min-h-screen bg-gray-50">
+    <!-- Dynamic Header -->
+    {global?.Header && global.Header.length > 0 && (
+      <ComponentRenderer components={global.Header} />
+    )}
+    
+    <!-- Main content -->
+    <main>
+      <slot />
+    </main>
+    
+    <!-- Dynamic Footer -->
+    {global?.Footer && global.Footer.length > 0 && (
+      <ComponentRenderer components={global.Footer} />
+    )}
+  </body>
+</html> 

@@ -1,0 +1,63 @@
+---
+interface Spacing {
+	spacing: 'none' | 'xl' | 'large' | 'default' | 'small';
+	linked_sides: boolean;
+	spacing_top: 'none' | 'xl' | 'large' | 'default' | 'small';
+	spacing_bottom: 'none' | 'xl' | 'large' | 'default' | 'small';
+}
+interface Props {
+	className?: string;
+	spacing?: Spacing | 'none' | 'xl' | 'large' | 'default' | 'small';
+	id?: string;
+}
+
+const {
+	className,
+	spacing = 'default',
+	id,
+} = Astro.props;
+
+const spacingClasses = {
+	none: '',
+	xl: 'py-[100px] md:py-[120px]',
+	large: 'py-[100px] md:py-[100px]',
+	default: 'py-[80px] md:py-[100px]',
+	small: 'py-[40px] md:py-[80px]',
+};
+const ptClasses = {
+	none: '',
+	xl: 'pt-[100px] md:pt-[120px]',
+	large: 'pt-[100px] md:pt-[100px]',
+	default: 'pt-[80px] md:pt-[100px]',
+	small: 'pt-[40px] md:pt-[80px]',
+};
+
+const pbClasses = {
+	none: '',
+	xl: 'pb-[100px] md:pb-[120px]',
+	large: 'pb-[100px] md:pb-[100px]',
+	default: 'pb-[80px] md:pb-[100px]',
+	small: 'pb-[40px] md:pb-[80px]',
+};
+
+let finalSpacingClass = '';
+
+if (typeof spacing === 'object' && spacing !== null) {
+	if (spacing.linked_sides) {
+		finalSpacingClass = spacingClasses[spacing.spacing || 'default'];
+	} else {
+		const topSpacing = spacing.spacing_top || 'default';
+		const bottomSpacing = spacing.spacing_bottom || 'default';
+		finalSpacingClass = `${ptClasses[topSpacing]} ${pbClasses[bottomSpacing]}`;
+	}
+} else {
+	finalSpacingClass = spacingClasses[spacing as keyof typeof spacingClasses];
+}
+---
+
+<section
+	id={id}
+	class={`relative ${finalSpacingClass} ${className ?? ''}`}
+>
+	<slot />
+</section>

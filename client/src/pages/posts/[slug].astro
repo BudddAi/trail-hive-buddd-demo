@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { fetchApi } from '../../utils/strapi';
+import { marked } from 'marked';
+
+export const prerender = true;
+export async function getStaticPaths() {
+  const posts = await fetchApi({
+    endpoint: 'posts?pLevel=5',
+    wrappedByKey: 'data',
+  });
+
+  if (!posts || !Array.isArray(posts)) {
+    return [];
+  }
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: post,
+  }));
+}
+
+const post = Astro.props;
+
+const pageTitle = post?.title || `Post`;
+const content = post?.content ? marked.parse(post.content) : '';
+---
+
+<Layout title={pageTitle}>
+  {post ? (
+    <div>
+      <div class="bg-gray-50 py-16">
+        <div class="container mx-auto px-4">
+          <div class="max-w-4xl mx-auto text-center">
+            {post.featured_image && (
+              <div class="mb-8">
+                <img
+                  src={`${import.meta.env.STRAPI_URL}${post.featured_image.url}`}
+                  class="w-full h-64 object-cover rounded-lg shadow-lg"
+                />
+              </div>
+            )}
+            
+            <h1 class="text-4xl font-bold mb-4">{post.title}</h1>
+            
+            {post.excerpt && (
+              <p class="text-xl text-gray-600 mb-6">{post.excerpt}</p>
+            )}
+            
+            <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
+              {post.categories?.length > 0 && (
+                <span>{post.categories.map((category) => category.name).join(', ')}</span>
+              )}
+              {post.publishedAt && (
+                <span>{new Date(post.publishedAt).toLocaleDateString()}</span>
+              )}
+            </div>
+
+            {post.content && (
+              <div set:html={content} />
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  ): null}
+</Layout> 
