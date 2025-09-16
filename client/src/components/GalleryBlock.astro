@@ -1,7 +1,7 @@
 ---
 import 'swiper/css';
-import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 import ModuleWrapper from '../utils/ModuleWrapper.astro';
 import { assetsPath } from '../utils/strapi';
 import Heading from './molecules/Heading.astro';
@@ -31,48 +31,48 @@ const {
   images = [],
   spacing
 } = Astro.props;
-
-const headingClassName = "text-center [&>h2]:text-color-37 [&>h2]:font-bold [&>h2]:text-size-4 md:[&>h2]:text-5xl [&>h2]:leading-lh-1 [&>h2]:tracking-tracking-1 [&>p]:text-color-37 [&>p]:text-lg [&>p]:leading-lh-16";
 ---
 
 <ModuleWrapper className="gallery-block" spacing={spacing}>
-  <div class="bg-color-11 py-16 md:py-24 overflow-hidden">
+  <div class="bg-color-5 py-16 md:py-20 lg:py-24 overflow-x-clip">
     <div class="container">
       {heading && (
-        <Heading 
+        <Heading
           as={heading.tag || 'h2'}
           heading={heading.text}
           subheading={heading.subheading}
           preheading={heading.preheading}
-          className={headingClassName}
+          className="items-center text-center"
+          headingClassName="font-font-3 font-bold text-4xl lg:text-5xl leading-lh-1 tracking-tracking-1 text-color-37"
+          subheadingClassName="font-font-3 font-normal text-lg leading-lh-16 text-color-37"
         />
       )}
     </div>
-    
-    {images && images.length > 0 && (
-      <div class="relative mt-12">
-        <div class="gallery-prev absolute top-1/2 -translate-y-1/2 left-4 md:left-8 z-20 cursor-pointer">
-          <CarouselArrowButton direction="left" />
-        </div>
-        <div class="gallery-next absolute top-1/2 -translate-y-1/2 right-4 md:right-8 z-20 cursor-pointer">
-          <CarouselArrowButton direction="right" />
-        </div>
 
-        <div class="swiper gallery-swiper !px-0">
+    {images && images.length > 0 && (
+      <div class="relative mt-12 md:mt-16">
+        <div class="swiper gallery-block-swiper !overflow-visible">
           <div class="swiper-wrapper">
-            {images.map((image) => (
+            {images.map(image => (
               <div class="swiper-slide">
-                <Image 
+                <Image
                   src={assetsPath(image.url) || ''}
                   alt={image.alternativeText || 'Gallery image'}
-                  className="w-full h-auto object-cover rounded-radius-3 aspect-[1/1] md:aspect-[4/3]"
+                  className="w-full h-auto aspect-[4/3] object-cover rounded-radius-3"
                 />
               </div>
             ))}
           </div>
         </div>
-        
-        <div class="gallery-pagination relative mt-8 flex justify-center"></div>
+
+        <div class="gallery-prev-button absolute top-1/2 -translate-y-1/2 left-4 md:left-8 lg:left-16 z-20 cursor-pointer hidden md:block">
+          <CarouselArrowButton direction="left" />
+        </div>
+        <div class="gallery-next-button absolute top-1/2 -translate-y-1/2 right-4 md:right-8 lg:right-16 z-20 cursor-pointer hidden md:block">
+          <CarouselArrowButton direction="right" />
+        </div>
+
+        <div class="gallery-pagination flex justify-center gap-2 mt-8 relative z-10"></div>
       </div>
     )}
   </div>
@@ -80,47 +80,52 @@ const headingClassName = "text-center [&>h2]:text-color-37 [&>h2]:font-bold [&>h
 
 <script>
   import { Swiper } from 'swiper';
-  import { Navigation, Pagination } from 'swiper/modules';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 
   document.addEventListener('DOMContentLoaded', () => {
-    const gallerySwiper = new Swiper('.gallery-swiper', {
-      modules: [Navigation, Pagination],
-      spaceBetween: 24,
-      slidesPerView: 1.2,
-      centeredSlides: true,
-      loop: true,
-      pagination: { 
-        el: '.gallery-pagination', 
-        clickable: true 
-      },
-      navigation: {
-        nextEl: '.gallery-next',
-        prevEl: '.gallery-prev',
-      },
-      breakpoints: {
-        768: {
-          slidesPerView: 2.5,
-          centeredSlides: false,
+    const swiperElement = document.querySelector('.gallery-block-swiper');
+    if (swiperElement) {
+      new Swiper('.gallery-block-swiper', {
+        modules: [Navigation, Pagination, Autoplay],
+        loop: true,
+        centeredSlides: true,
+        autoplay: {
+          delay: 3500,
+          disableOnInteraction: false,
         },
-        1280: {
-          slidesPerView: 3.5,
-          centeredSlides: true,
+        spaceBetween: 24,
+        slidesPerView: 1.2,
+        breakpoints: {
+          640: {
+            slidesPerView: 2.5,
+          },
+          1024: {
+            slidesPerView: 3.5,
+          },
         },
-      },
-    });
+        navigation: {
+          nextEl: '.gallery-next-button',
+          prevEl: '.gallery-prev-button',
+        },
+        pagination: {
+          el: '.gallery-pagination',
+          clickable: true,
+        },
+      });
+    }
   });
 </script>
 
 <style is:global>
-  .gallery-pagination .swiper-pagination-bullet {
+  .gallery-block-swiper .swiper-pagination-bullet {
     width: 8px;
     height: 8px;
-    background-color: var(--color-9, #232e2666);
-    opacity: 1;
-    transition: background-color 0.3s ease;
-    margin: 0 6px !important;
+    background-color: #d9efde;
+    opacity: 0.5;
+    transition: opacity 0.3s, background-color 0.3s;
   }
-  .gallery-pagination .swiper-pagination-bullet-active {
-    background-color: var(--color-55, #FFFFFF);
+  .gallery-block-swiper .swiper-pagination-bullet-active {
+    background-color: #ffffff;
+    opacity: 1;
   }
 </style>
