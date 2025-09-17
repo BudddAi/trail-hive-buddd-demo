@@ -13,11 +13,15 @@
   "attributes": {
     "Header": {
       "type": "dynamiczone",
-      "components": []
+      "components": [
+        "modules.navbar"
+      ]
     },
     "Footer": {
       "type": "dynamiczone",
-      "components": []
+      "components": [
+        "modules.footer"
+      ]
     }
   }
 }
