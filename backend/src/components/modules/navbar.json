@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_modules_navbars",
+  "info": {
+    "displayName": "Navbar",
+    "description": "Responsive website navigation bar with brand logo, navigation links, and call-to-action buttons"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.logo",
+      "required": true
+    },
+    "navLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.link",
+      "required": false
+    },
+    "buttons": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.button",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

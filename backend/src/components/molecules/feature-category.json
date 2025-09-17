@@ -1,0 +1,22 @@
+{
+  "collectionName": "components_molecules_feature_categories",
+  "info": {
+    "displayName": "Feature Category",
+    "icon": "layer-group",
+    "description": "Component for a category in the feature comparison table."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "features": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.feature-item",
+      "required": false
+    }
+  }
+}

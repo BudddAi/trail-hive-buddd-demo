@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_molecules_info_cards",
+  "info": {
+    "displayName": "Info Card",
+    "icon": "layout",
+    "description": "Component for a feature card with layout and width options, used in a grid."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "layout": {
+      "type": "enumeration",
+      "enum": [
+        "text_top",
+        "text_left",
+        "text_right"
+      ],
+      "required": false,
+      "default": "text_top"
+    },
+    "width": {
+      "type": "enumeration",
+      "enum": [
+        "half",
+        "full"
+      ],
+      "required": false,
+      "default": "half"
+    }
+  }
+}

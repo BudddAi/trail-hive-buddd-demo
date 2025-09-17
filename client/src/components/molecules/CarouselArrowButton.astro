@@ -1,0 +1,22 @@
+---
+interface CarouselArrowButtonProps {
+  direction: 'left' | 'right';
+}
+
+export interface Props extends CarouselArrowButtonProps {}
+
+const { direction } = Astro.props;
+
+const leftArrowSrc = "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-8149-9482-c3f61b638921/1845:104.svg";
+const rightArrowSrc = "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-8149-9482-c3f61b638921/1845:108.svg";
+
+const iconSrc = direction === 'left' ? leftArrowSrc : rightArrowSrc;
+const altText = direction === 'left' ? "Previous" : "Next";
+---
+
+<button
+  class="w-14 h-14 md:w-20 md:h-20 rounded-full bg-color-2 flex items-center justify-center cursor-pointer transition-transform duration-300 hover:scale-110"
+  aria-label={altText}
+>
+  <img src={iconSrc} alt="" class="w-3 h-3 md:w-4 md:h-4" />
+</button>

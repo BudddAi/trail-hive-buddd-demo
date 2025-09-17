@@ -1,0 +1,35 @@
+---
+import { assetsPath } from '../../utils/strapi';
+import Image from './Image.astro';
+
+interface FeatureItemProps {
+  iconSrc: string;
+  iconAlt: string;
+  title: string;
+  description?: string;
+}
+
+export interface Props extends FeatureItemProps {}
+
+const { iconSrc, iconAlt, title, description } = Astro.props;
+---
+
+<div class="text-center md:text-left">
+  {iconSrc && (
+    <Image 
+      src={iconSrc} 
+      alt={iconAlt} 
+      className="h-16 w-16 mb-6 mx-auto md:mx-0" 
+    />
+  )}
+  {title && (
+    <h3 class="font-font-3 font-bold text-xl leading-lh-4 text-color-37 mb-2">
+      {title}
+    </h3>
+  )}
+  {description && (
+    <p class="font-font-3 font-normal text-base leading-snug text-color-37">
+      {description}
+    </p>
+  )}
+</div>

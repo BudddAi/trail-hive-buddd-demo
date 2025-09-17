@@ -1,0 +1,32 @@
+---
+interface AccordionItemProps {
+  title: string;
+  content: string;
+  index: number;
+}
+
+export interface Props extends AccordionItemProps {}
+
+const { title, content, index } = Astro.props;
+---
+
+<div class="border-b border-solid border-color-8 first:border-t">
+  <button
+    class="accordion-button w-full flex justify-between items-center text-left py-4 lg:py-6 cursor-pointer"
+    data-index={index}
+  >
+    <span class="font-font-3 font-bold text-base lg:text-lg leading-lh-11 text-color-5">
+      {title}
+    </span>
+    <img
+      src="https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-81ac-bb12-fad7898bff3d/1733:718.svg"
+      alt="chevron icon"
+      class="accordion-chevron w-4 h-4 transition-transform duration-500 ease-in-out"
+    />
+  </button>
+  <div class="accordion-content h-0 overflow-hidden transition-all duration-500 ease-in-out opacity-0">
+    {content && content.trim() && (
+      <div class="font-font-3 font-normal text-sm lg:text-base leading-6 text-color-5 pb-4 lg:pb-6" set:html={content} />
+    )}
+  </div>
+</div>

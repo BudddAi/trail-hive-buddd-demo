@@ -1,0 +1,106 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import PricingTierCard from './molecules/PricingTierCard.astro';
+import FeatureComparisonTable from './molecules/FeatureComparisonTable.astro';
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface ButtonComponent {
+  text: string;
+  url?: string;
+  style?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+}
+
+interface FeatureValue {
+  value?: string;
+}
+
+interface FeatureItem {
+  name: string;
+  values?: FeatureValue[];
+}
+
+interface FeatureCategory {
+  title: string;
+  features?: FeatureItem[];
+}
+
+interface PricingPlanCard {
+  planName: string;
+  price: string;
+  billingCycle?: string;
+  description?: string;
+  button?: ButtonComponent;
+}
+
+interface PricingTableProps {
+  heading: HeadingComponent;
+  plans: PricingPlanCard[];
+  featureCategories?: FeatureCategory[];
+  isVisible?: boolean;
+  spacing?: any;
+}
+
+export interface Props extends PricingTableProps {}
+
+const { 
+  heading, 
+  plans, 
+  featureCategories = [],
+  isVisible = true,
+  spacing
+} = Astro.props;
+
+const planNames = plans?.map(plan => plan.planName) || [];
+---
+
+<ModuleWrapper className="pricing-table" spacing={spacing}>
+  {isVisible && (
+    <div class="bg-color-37 py-16 lg:py-24">
+      <div class="container">
+        {heading && (
+          <Heading
+            preheading={heading.preheading}
+            heading={heading.text}
+            subheading={heading.subheading}
+            as={heading.tag || 'h2'}
+            className="text-center max-w-xl mx-auto mb-12 lg:mb-16"
+            headingClassName="font-lato font-bold text-4xl md:text-5xl leading-lh-5 text-color-5"
+            subheadingClassName="font-lato font-normal text-base md:text-lg leading-6 text-color-5"
+          />
+        )}
+
+        {plans && plans.length > 0 && (
+          <div class="grid grid-cols-1 lg:grid-cols-3 border-t border-b border-solid border-color-5">
+            {plans.map((plan, index) => (
+              <PricingTierCard
+                planName={plan.planName}
+                price={plan.price}
+                billingCycle={plan.billingCycle}
+                description={plan.description}
+                button={plan.button}
+                className={index > 0 ? 'border-t lg:border-t-0 lg:border-l border-solid border-color-5' : ''}
+              />
+            ))}
+          </div>
+        )}
+
+        {featureCategories && featureCategories.length > 0 && (
+          <div class="mt-[-1px]">
+            <FeatureComparisonTable 
+              categories={featureCategories} 
+              planNames={planNames} 
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+</ModuleWrapper>

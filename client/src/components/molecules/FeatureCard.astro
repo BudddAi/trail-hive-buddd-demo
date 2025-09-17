@@ -1,0 +1,61 @@
+---
+import { assetsPath } from '../../utils/strapi';
+import Image from './Image.astro';
+
+interface FeatureCardProps {
+  title: string;
+  description?: string;
+  image?: {
+    url: string;
+    alternativeText?: string;
+    width?: number;
+    height?: number;
+  };
+  layout?: 'text_top' | 'text_left' | 'text_right';
+  width?: 'half' | 'full';
+  className?: string;
+}
+
+export interface Props extends FeatureCardProps {}
+
+const { 
+  title, 
+  description, 
+  image, 
+  layout = 'text_top', 
+  width = 'half', 
+  className = '' 
+} = Astro.props;
+
+const cardBaseClasses = "bg-white/40 border border-white/40 rounded-radius-5 p-6 md:p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-6 md:gap-8 backdrop-blur-sm";
+
+const textWrapperOrder = layout === 'text_right' ? 'lg:order-2' : 'lg:order-1';
+const imageWrapperOrder = layout === 'text_right' ? 'lg:order-1' : 'lg:order-2';
+
+const wrapperWidth = width === 'full' ? 'lg:w-1/2' : 'w-full';
+---
+
+<div class={`${cardBaseClasses} ${className}`}>
+  <div class={`flex flex-col gap-4 w-full ${wrapperWidth} ${textWrapperOrder}`}>
+    {title && (
+      <h3 class="font-font-3 font-bold text-size-3 lg:text-size-4 leading-lh-2 text-color-11">
+        {title}
+      </h3>
+    )}
+    {description && (
+      <p class="font-font-3 font-normal text-lg lg:text-xl leading-lh-10 text-color-11">
+        {description}
+      </p>
+    )}
+  </div>
+
+  {image?.url && (
+    <div class={`w-full ${wrapperWidth} ${imageWrapperOrder}`}>
+      <Image 
+        src={assetsPath(image.url) || ''} 
+        alt={image.alternativeText || title || 'Feature card image'} 
+        className="w-full h-auto object-contain"
+      />
+    </div>
+  )}
+</div>

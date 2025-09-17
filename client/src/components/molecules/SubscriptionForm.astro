@@ -1,0 +1,47 @@
+---
+import Button from './Button.astro';
+
+interface SubscriptionFormProps {
+  placeholder?: string;
+  buttonLabel: string;
+  buttonUrl?: string;
+  buttonStyle?: 'solid-dark' | 'outline-dark' | 'ghost' | 'outline-light' | 'solid-light' | 'solid-green';
+  legalText?: string;
+}
+
+export interface Props extends SubscriptionFormProps {}
+
+const { 
+  placeholder = 'Enter your email', 
+  buttonLabel, 
+  buttonUrl = '#',
+  buttonStyle = 'outline-light',
+  legalText 
+} = Astro.props;
+---
+
+<div class="flex flex-col gap-4">
+  <form class="flex flex-col sm:flex-row sm:items-end gap-4">
+    <div class="flex-grow">
+      <input
+        type="email"
+        placeholder={placeholder}
+        class="w-full bg-transparent border-0 border-b border-solid border-color-40 pb-2 font-font-3 text-sm text-color-37 placeholder:text-color-40 focus:outline-none focus:ring-0 focus:border-color-37 transition-colors duration-300"
+      />
+    </div>
+    <div class="flex-shrink-0">
+      <Button 
+        href={buttonUrl} 
+        label={buttonLabel} 
+        variant={buttonStyle} 
+        className="w-full sm:w-auto" 
+      />
+    </div>
+  </form>
+  {legalText && legalText.trim() && (
+    <div
+      class="font-font-2 text-xs leading-lh-14 text-color-41 [&_a]:text-color-41"
+      set:html={legalText}
+    />
+  )}
+</div>

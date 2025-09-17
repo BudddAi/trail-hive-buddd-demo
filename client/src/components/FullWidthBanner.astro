@@ -1,0 +1,63 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import Image from './molecules/Image.astro';
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface FullWidthBannerProps {
+  heading: HeadingComponent;
+  image: {
+    url: string;
+    alternativeText?: string;
+  };
+  backgroundColor?: 'light-green' | 'white' | 'gray';
+  spacing?: any;
+}
+
+export interface Props extends FullWidthBannerProps {}
+
+const { 
+  heading,
+  image,
+  backgroundColor = 'light-green',
+  spacing
+} = Astro.props;
+
+const bgClasses = {
+  'light-green': 'bg-color-37',
+  'white': 'bg-color-55',
+  'gray': 'bg-color-51'
+};
+---
+
+<ModuleWrapper className="full-width-banner" spacing={spacing}>
+  <div class={`${bgClasses[backgroundColor]} py-12 md:py-16 lg:py-24`}>
+    <div class="container">
+      <div class="flex flex-col items-center gap-8 md:gap-12">
+        {heading && heading.text && (
+          <Heading
+            as={heading.tag || 'h2'}
+            heading={heading.text}
+            subheading={heading.subheading}
+            preheading={heading.preheading}
+            className="text-center max-w-4xl"
+          />
+        )}
+        {image?.url && (
+          <Image
+            src={assetsPath(image.url) || ''}
+            alt={image.alternativeText || 'Banner image'}
+            className="w-full rounded-radius-5"
+          />
+        )}
+      </div>
+    </div>
+  </div>
+</ModuleWrapper>

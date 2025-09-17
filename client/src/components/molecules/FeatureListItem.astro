@@ -1,0 +1,20 @@
+---
+import Image from './Image.astro';
+
+interface FeatureListItemProps {
+  text: string;
+}
+
+export interface Props extends FeatureListItemProps {}
+
+const { text } = Astro.props;
+
+const checkmarkIcon = "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-81f8-ac46-e32296f5d295/1849:1718.svg";
+---
+
+{text && (
+  <li class="flex items-center gap-3">
+    <Image src={checkmarkIcon} alt="Checkmark" className="w-5 h-5 flex-shrink-0" />
+    <span class="font-font-3 font-normal text-base leading-6 text-color-5">{text}</span>
+  </li>
+)}

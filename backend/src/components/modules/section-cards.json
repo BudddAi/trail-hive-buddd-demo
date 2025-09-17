@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_modules_section_cards",
+  "info": {
+    "displayName": "Section Cards",
+    "description": "Showcase key features or advantages in a visually engaging grid layout with heading and feature cards"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.info-card",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

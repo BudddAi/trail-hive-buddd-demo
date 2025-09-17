@@ -1,0 +1,15 @@
+---
+interface TextLinkProps {
+  text: string;
+  href?: string;
+}
+
+export interface Props extends TextLinkProps {}
+
+const { text, href = '#' } = Astro.props;
+---
+
+<a href={href} class="inline-flex items-center gap-2 text-color-5 font-font-3 font-semibold text-base leading-6 no-underline cursor-pointer group">
+  <span>{text}</span>
+  <img src="https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-81df-a9f1-f372db9b0cc8/1845:165.svg" alt="arrow right" class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+</a>

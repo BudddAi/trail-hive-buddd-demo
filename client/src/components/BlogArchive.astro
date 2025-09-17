@@ -1,0 +1,205 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { fetchApi, assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import Button from './molecules/Button.astro';
+import SearchInput from './molecules/SearchInput.astro';
+import Card from './molecules/Card.astro';
+
+interface Post {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  featured_image?: {
+    url: string;
+    alternativeText?: string;
+  };
+  excerpt?: string;
+  content?: string;
+  categories?: Category[];
+  publishedAt: string;
+}
+
+interface Category {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  name: string;
+}
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface BlogArchiveProps {
+  preheading?: string;
+  heading: HeadingComponent;
+  description?: string;
+  searchPlaceholder?: string;
+  allCategoriesLabel?: string;
+  featuredPostsToggle?: boolean;
+  manualFeaturedPosts?: Post[];
+  spacing?: any;
+}
+
+export interface Props extends BlogArchiveProps {}
+
+const {
+  preheading,
+  heading,
+  description,
+  searchPlaceholder = 'Search',
+  allCategoriesLabel = 'All',
+  featuredPostsToggle = true,
+  manualFeaturedPosts = [],
+  spacing
+} = Astro.props;
+
+let featuredPosts: Post[] = [];
+let categories: Category[] = [];
+
+try {
+  categories = await fetchApi<Category[]>({
+    endpoint: 'categories',
+    query: { 'pLevel': '2' },
+    wrappedByKey: 'data'
+  }) || [];
+
+  if (featuredPostsToggle) {
+    featuredPosts = await fetchApi<Post[]>({
+      endpoint: 'posts',
+      query: {
+        'pLevel': '5',
+        'sort': 'publishedAt:desc',
+        'pagination[limit]': '3'
+      },
+      wrappedByKey: 'data'
+    }) || [];
+  } else {
+    featuredPosts = Array.isArray(manualFeaturedPosts) ? manualFeaturedPosts.slice(0, 3) : [];
+  }
+} catch (error) {
+  console.error('Error fetching blog data:', error);
+  featuredPosts = [];
+  categories = [];
+}
+
+const mainPost = featuredPosts[0];
+const sidePosts = featuredPosts.slice(1, 3);
+
+const categoryButtons = [
+  { label: allCategoriesLabel, href: '#', variant: 'solid-dark' },
+  ...categories.map(category => ({
+    label: category.name || category.title,
+    href: `#${category.slug}`,
+    variant: 'outline-dark'
+  }))
+];
+---
+
+<ModuleWrapper className="blog-archive" spacing={spacing}>
+  <div class="bg-color-37 py-12 md:py-24">
+    <div class="container">
+      <div class="mb-8 md:mb-12">
+        <Heading 
+          preheading={preheading || heading.preheading}
+          heading={heading.text}
+          subheading={heading.subheading}
+          as={heading.tag || 'h1'}
+          className="max-w-3xl"
+        />
+        {description && description.trim() && (
+          <div class="prose max-w-none mt-4" set:html={description} />
+        )}
+      </div>
+
+      <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-6 lg:gap-8 mb-8 md:mb-12">
+        <div class="flex gap-2 overflow-x-auto whitespace-nowrap pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:flex-wrap lg:overflow-x-visible lg:pb-0 lg:whitespace-normal">
+          {categoryButtons.map(category => (
+            <Button 
+              label={category.label}
+              href={category.href}
+              variant={category.variant}
+            />
+          ))}
+        </div>
+        <div class="w-full lg:w-auto lg:max-w-xs flex-shrink-0">
+          <SearchInput placeholder={searchPlaceholder} />
+        </div>
+      </div>
+
+      {featuredPosts.length > 0 && (
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 mb-12 md:mb-16">
+          {mainPost && (
+            <div class="lg:col-span-3">
+              <Card 
+                variant="vertical"
+                imageSrc={mainPost.featured_image?.url}
+                imageAlt={mainPost.featured_image?.alternativeText || mainPost.title}
+                category={mainPost.categories?.[0]?.name || mainPost.categories?.[0]?.title}
+                readTime="15 min read"
+                title={mainPost.title}
+                description={mainPost.excerpt}
+                linkHref={`/blog/${mainPost.slug}`}
+              />
+            </div>
+          )}
+          {sidePosts.length > 0 && (
+            <div class="lg:col-span-2 flex flex-col gap-8">
+              {sidePosts.map(post => (
+                <Card 
+                  variant="horizontal"
+                  imageSrc={post.featured_image?.url}
+                  imageAlt={post.featured_image?.alternativeText || post.title}
+                  category={post.categories?.[0]?.name || post.categories?.[0]?.title}
+                  readTime="10 min read"
+                  title={post.title}
+                  description={post.excerpt}
+                  linkHref={`/blog/${post.slug}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  </div>
+</ModuleWrapper>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.querySelector('input[type="text"]');
+    const categoryButtons = document.querySelectorAll('.category-filter');
+    const featuredSection = document.querySelector('.featured-posts');
+    const archiveSection = document.querySelector('.archive-posts');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        if (searchTerm.length > 0) {
+          if (featuredSection) featuredSection.style.display = 'none';
+          if (archiveSection) archiveSection.style.display = 'block';
+        } else {
+          if (featuredSection) featuredSection.style.display = 'block';
+          if (archiveSection) archiveSection.style.display = 'none';
+        }
+      });
+    }
+
+    categoryButtons.forEach(button => {
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        categoryButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        
+        if (featuredSection) featuredSection.style.display = 'none';
+        if (archiveSection) archiveSection.style.display = 'block';
+      });
+    });
+  });
+</script>

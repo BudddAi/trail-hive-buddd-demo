@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_modules_pricing_tables",
+  "info": {
+    "displayName": "Pricing Table",
+    "description": "Comprehensive pricing table with header, pricing plan cards, and detailed feature comparison table organized by categories"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "plans": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.pricing-plan-card",
+      "required": true
+    },
+    "featureCategories": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.feature-category",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

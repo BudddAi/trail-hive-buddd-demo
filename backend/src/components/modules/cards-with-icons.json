@@ -1,0 +1,32 @@
+{
+  "collectionName": "components_modules_cards_with_iconss",
+  "info": {
+    "displayName": "Cards With Icons",
+    "description": "Showcase section for key features or benefits in a grid layout with icons, titles and descriptions"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": false
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.feature-card",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,88 @@
+---
+import { assetsPath } from '../../utils/strapi';
+
+interface FeatureValue {
+  value?: string;
+}
+
+interface FeatureItem {
+  name: string;
+  values?: FeatureValue[];
+}
+
+interface FeatureCategory {
+  title: string;
+  features?: FeatureItem[];
+}
+
+interface FeatureComparisonTableProps {
+  categories: FeatureCategory[];
+  planNames: string[];
+}
+
+export interface Props extends FeatureComparisonTableProps {}
+
+const { categories, planNames } = Astro.props;
+
+const checkmarkIconUrl = "https://ai-bot-v2.s3.us-east-2.amazonaws.com/generated/68348df8a2283e7a16d47b9b/68c9a34c851489d51ecbcf3b/figma/2704d94e-8f62-8198-904d-f0caaaff5489/1849:1088.svg";
+---
+
+{categories && categories.length > 0 && planNames && planNames.length > 0 && (
+  <div class="w-full overflow-x-auto">
+    <div class="min-w-[700px] lg:min-w-full">
+      <div class="grid grid-cols-[2fr_1fr_1fr_1fr] border-b border-solid border-color-5 bg-color-34 lg:hidden">
+        <div class="p-4 border-r border-solid border-color-5">
+          <!-- Empty cell for alignment -->
+        </div>
+        {planNames.map((name, index) => (
+          <div class="p-4 flex justify-center items-center font-roboto font-bold text-base text-center text-color-5 border-r border-solid border-color-5 last:border-r-0">
+            {name}
+          </div>
+        ))}
+      </div>
+
+      {categories.map((category, catIndex) => (
+        <div>
+          {category.title && (
+            <div class="bg-color-34 border-b border-solid border-color-5">
+              <h4 class="p-4 font-roboto font-bold text-xl leading-lh-13 text-color-5">
+                {category.title}
+              </h4>
+            </div>
+          )}
+          
+          {category.features && category.features.length > 0 && (
+            category.features.map((feature, featIndex) => (
+              <div class="grid grid-cols-[2fr_1fr_1fr_1fr] border-b border-solid border-color-5">
+                <div class="p-4 border-r border-solid border-color-5 font-roboto text-base text-color-5 bg-color-37">
+                  {feature.name}
+                </div>
+                {feature.values && feature.values.length > 0 ? (
+                  feature.values.map((valueObj, valIndex) => (
+                    <div class="p-4 flex justify-center items-center border-r border-solid border-color-5 font-roboto font-semibold text-base text-center text-color-5 bg-color-37 last:border-r-0">
+                      {valueObj.value === '✓' ? (
+                        <img 
+                          src={checkmarkIconUrl} 
+                          alt="Included" 
+                          class="w-6 h-6" 
+                        />
+                      ) : (
+                        valueObj.value || ''
+                      )}
+                    </div>
+                  ))
+                ) : (
+                  planNames.map((_, valIndex) => (
+                    <div class="p-4 flex justify-center items-center border-r border-solid border-color-5 font-roboto font-semibold text-base text-center text-color-5 bg-color-37 last:border-r-0">
+                      <!-- Empty cell -->
+                    </div>
+                  ))
+                )}
+              </div>
+            ))
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}

@@ -1,0 +1,30 @@
+---
+interface ButtonProps {
+  label: string;
+  href?: string;
+  variant?: 'solid-dark' | 'outline-dark' | 'outline-light' | 'solid-green';
+  className?: string;
+}
+
+export interface Props extends ButtonProps {}
+
+const { 
+  label, 
+  href = '#', 
+  variant = 'solid-dark', 
+  className = '' 
+} = Astro.props;
+
+const baseClasses = "px-6 py-2.5 rounded-full font-font-3 text-base leading-6 no-underline cursor-pointer transition-colors duration-300 text-center whitespace-nowrap inline-block";
+
+const variants = {
+  'solid-dark': 'bg-color-5 text-color-37 hover:bg-opacity-90',
+  'outline-dark': 'bg-transparent border border-solid border-color-5 text-color-5 hover:bg-color-5 hover:text-color-37',
+  'outline-light': 'bg-transparent border border-solid border-color-37 text-color-37 hover:bg-color-37 hover:text-color-11',
+  'solid-green': 'bg-color-37 text-color-5 font-semibold hover:opacity-90',
+};
+---
+
+<a href={href} class={`${baseClasses} ${variants[variant]} ${className}`}>
+  {label}
+</a>

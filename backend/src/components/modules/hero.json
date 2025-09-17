@@ -1,0 +1,40 @@
+{
+  "collectionName": "components_modules_heros",
+  "info": {
+    "displayName": "Hero",
+    "description": "Primary hero section with heading, description, call-to-action button, and featured image in a two-column layout"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button",
+      "required": true
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

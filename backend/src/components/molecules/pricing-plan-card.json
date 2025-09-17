@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_molecules_pricing_plan_cards",
+  "info": {
+    "displayName": "Pricing Plan Card",
+    "icon": "credit-card",
+    "description": "Component for a single pricing plan card."
+  },
+  "options": {},
+  "attributes": {
+    "planName": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "price": {
+      "type": "string",
+      "required": true,
+      "maxLength": 100
+    },
+    "billingCycle": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100
+    },
+    "description": {
+      "type": "text",
+      "required": false
+    },
+    "button": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button"
+    }
+  }
+}

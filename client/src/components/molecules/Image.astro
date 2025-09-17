@@ -1,0 +1,13 @@
+---
+interface ImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+}
+
+export interface Props extends ImageProps {}
+
+const { src, alt, className = '' } = Astro.props;
+---
+
+<img src={src} alt={alt} class={className} loading="lazy" />

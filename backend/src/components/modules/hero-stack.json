@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_modules_hero_stacks",
+  "info": {
+    "displayName": "Hero Stack",
+    "description": "Hero section with main heading, background image, and overlay card containing title, description and CTA button"
+  },
+  "options": {},
+  "attributes": {
+    "mainHeading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "backgroundImage": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "overlayHeading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "overlayDescription": {
+      "type": "richtext",
+      "required": true
+    },
+    "overlayButton": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button",
+      "required": true
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

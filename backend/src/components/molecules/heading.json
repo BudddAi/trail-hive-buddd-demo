@@ -1,0 +1,39 @@
+{
+  "collectionName": "components_molecules_headings",
+  "info": {
+    "displayName": "Heading",
+    "icon": "heading",
+    "description": "Reusable heading component with tag selector."
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "maxLength": 255
+    },
+    "tag": {
+      "type": "enumeration",
+      "enum": [
+        "h1",
+        "h2",
+        "h3",
+        "h4",
+        "h5",
+        "h6"
+      ],
+      "required": false,
+      "default": "h2"
+    },
+    "subheading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    },
+    "preheading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 255
+    }
+  }
+}

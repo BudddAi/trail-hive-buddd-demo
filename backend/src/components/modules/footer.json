@@ -1,0 +1,60 @@
+{
+  "collectionName": "components_modules_footers",
+  "info": {
+    "displayName": "Footer",
+    "description": "Comprehensive website footer with logo, navigation links, newsletter subscription, and social media"
+  },
+  "options": {},
+  "attributes": {
+    "logo": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.logo",
+      "required": true
+    },
+    "linkColumns": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.link-column",
+      "required": false
+    },
+    "newsletterPlaceholder": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "newsletterAgreement": {
+      "type": "richtext",
+      "required": false
+    },
+    "newsletterButton": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.button",
+      "required": true
+    },
+    "copyrightText": {
+      "type": "text",
+      "required": false
+    },
+    "legalLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.link",
+      "required": false
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "molecules.social-link",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

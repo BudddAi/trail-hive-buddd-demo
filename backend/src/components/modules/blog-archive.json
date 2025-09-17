@@ -1,0 +1,55 @@
+{
+  "collectionName": "components_modules_blog_archives",
+  "info": {
+    "displayName": "Blog Archive",
+    "description": "Blog archive page with header, search, category filters, and featured posts grid"
+  },
+  "options": {},
+  "attributes": {
+    "preheading": {
+      "type": "string",
+      "required": false,
+      "maxLength": 100,
+      "minLength": 1
+    },
+    "heading": {
+      "type": "component",
+      "repeatable": false,
+      "component": "molecules.heading",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": false
+    },
+    "searchPlaceholder": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "allCategoriesLabel": {
+      "type": "string",
+      "required": false,
+      "maxLength": 50,
+      "minLength": 1
+    },
+    "featuredPostsToggle": {
+      "type": "boolean",
+      "default": true,
+      "required": false
+    },
+    "manualFeaturedPosts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "required": false
+    },
+    "spacing": {
+      "type": "component",
+      "component": "support.module-spacing",
+      "repeatable": false,
+      "required": true
+    }
+  }
+}

@@ -1,0 +1,67 @@
+---
+import ModuleWrapper from '../utils/ModuleWrapper.astro';
+import { assetsPath } from '../utils/strapi';
+import Heading from './molecules/Heading.astro';
+import FeatureItem from './molecules/FeatureItem.astro';
+
+interface HeadingComponent {
+  text: string;
+  tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  subheading?: string;
+  preheading?: string;
+}
+
+interface FeatureCard {
+  icon?: {
+    url: string;
+    alternativeText?: string;
+  };
+  title: string;
+  description?: string;
+}
+
+interface CardsWithIconsProps {
+  heading?: HeadingComponent;
+  description?: string;
+  cards?: FeatureCard[];
+  spacing?: any;
+}
+
+export interface Props extends CardsWithIconsProps {}
+
+const { 
+  heading, 
+  description, 
+  cards = [],
+  spacing
+} = Astro.props;
+---
+
+<ModuleWrapper className="cards-with-icons" spacing={spacing}>
+  <div class="bg-color-11 py-16 sm:py-24">
+    <div class="container">
+      <div class="max-w-3xl mx-auto text-center">
+        {heading && (
+          <Heading
+            as={heading.tag || 'h2'}
+            heading={heading.text}
+            subheading={description}
+            className="[&>h2]:text-4xl md:[&>h2]:text-5xl [&>h2]:font-bold [&>h2]:leading-lh-1 [&>h2]:tracking-tracking-1 [&>h2]:text-color-37 [&>p]:text-lg [&>p]:leading-lh-16 [&>p]:text-color-37 [&>p]:mt-4"
+          />
+        )}
+      </div>
+      {cards && cards.length > 0 && (
+        <div class="mt-12 md:mt-16 grid grid-cols-1 gap-x-8 gap-y-12 md:gap-y-16 md:grid-cols-2 lg:grid-cols-3">
+          {cards.map(card => (
+            <FeatureItem
+              iconSrc={assetsPath(card.icon?.url) || ''}
+              iconAlt={card.icon?.alternativeText || card.title || 'Feature icon'}
+              title={card.title}
+              description={card.description}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+</ModuleWrapper>
