@@ -454,7 +454,24 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Body: Schema.Attribute.DynamicZone<[]>;
+    Body: Schema.Attribute.DynamicZone<
+      [
+        'modules.stats-with-image',
+        'modules.section-cards',
+        'modules.quote',
+        'modules.pricing',
+        'modules.pricing-table',
+        'modules.left-right',
+        'modules.hero',
+        'modules.hero-stack',
+        'modules.gallery-block',
+        'modules.full-width-banner',
+        'modules.cards',
+        'modules.cards-with-icons',
+        'modules.blog-grid',
+        'modules.blog-archive',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -480,7 +497,24 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    Body: Schema.Attribute.DynamicZone<[]>;
+    Body: Schema.Attribute.DynamicZone<
+      [
+        'modules.stats-with-image',
+        'modules.section-cards',
+        'modules.quote',
+        'modules.pricing',
+        'modules.pricing-table',
+        'modules.left-right',
+        'modules.hero',
+        'modules.hero-stack',
+        'modules.gallery-block',
+        'modules.full-width-banner',
+        'modules.cards',
+        'modules.cards-with-icons',
+        'modules.blog-grid',
+        'modules.blog-archive',
+      ]
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

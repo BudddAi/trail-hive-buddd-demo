@@ -13,7 +13,22 @@
   "attributes": {
     "Body": {
       "type": "dynamiczone",
-      "components": []
+      "components": [
+        "modules.stats-with-image",
+        "modules.section-cards",
+        "modules.quote",
+        "modules.pricing",
+        "modules.pricing-table",
+        "modules.left-right",
+        "modules.hero",
+        "modules.hero-stack",
+        "modules.gallery-block",
+        "modules.full-width-banner",
+        "modules.cards",
+        "modules.cards-with-icons",
+        "modules.blog-grid",
+        "modules.blog-archive"
+      ]
     },
     "seo": {
       "type": "component",
