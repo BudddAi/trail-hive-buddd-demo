@@ -2,7 +2,7 @@
 import ModuleWrapper from '../utils/ModuleWrapper.astro';
 import Heading from './molecules/Heading.astro';
 import Button from './molecules/Button.astro';
-import Card from './molecules/Card.astro';
+import InfoCard from './molecules/InfoCard.astro';
 
 interface HeadingComponent {
   text: string;
@@ -27,53 +27,41 @@ interface FeatureImageCard {
 }
 
 interface CardsProps {
-  preHeading?: string;
-  heading?: HeadingComponent;
-  button?: ButtonComponent;
+  heading: HeadingComponent;
+  button: ButtonComponent;
   cards?: FeatureImageCard[];
   spacing?: any;
 }
 
 export interface Props extends CardsProps {}
 
-const {
-  preHeading,
-  heading,
-  button,
-  cards = [],
-  spacing
-} = Astro.props;
+const { heading, button, cards = [], spacing } = Astro.props;
 ---
 
 <ModuleWrapper className="cards" spacing={spacing}>
-  <div class="bg-color-37 rounded-radius-3">
-    <div class="container py-16 lg:py-24">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        <div class="lg:col-span-4 flex flex-col gap-8 items-center text-center lg:items-start lg:text-left">
+  <div class="container">
+    <div class="bg-color-37 rounded-radius-5 p-6 sm:p-8 md:p-16 lg:p-space-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+        <div class="lg:col-span-4 flex flex-col gap-8 lg:gap-10 items-start">
           <Heading 
-            preheading={preHeading || heading?.preheading}
-            heading={heading?.text}
-            subheading={heading?.subheading}
-            as={heading?.tag || 'h2'}
+            preheading={heading.preheading}
+            heading={heading.text}
+            as={heading.tag}
           />
-          {button && button.text && (
-            <Button 
-              label={button.text}
-              href={button.url || '#'}
-              variant={button.style || 'solid-dark'}
-            />
-          )}
+          <Button 
+            label={button.text}
+            href={button.url}
+            variant={button.style}
+          />
         </div>
         {cards && cards.length > 0 && (
-          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-            {cards.map((card) => (
-              <Card 
-                variant="vertical"
+          <div class="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {cards.map(card => (
+              <InfoCard 
                 imageSrc={card.image?.url}
                 imageAlt={card.image?.alternativeText || card.title}
                 title={card.title}
                 description={card.description}
-                linkHref="#"
               />
             ))}
           </div>

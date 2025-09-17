@@ -1,0 +1,35 @@
+---
+import { assetsPath } from '../../utils/strapi';
+import Image from './Image.astro';
+
+interface InfoCardProps {
+  imageSrc?: string;
+  imageAlt?: string;
+  title: string;
+  description?: string;
+}
+
+export interface Props extends InfoCardProps {}
+
+const { imageSrc, imageAlt, title, description } = Astro.props;
+---
+
+<div class="flex flex-col gap-6">
+  {imageSrc && (
+    <Image
+      src={assetsPath(imageSrc) || ''}
+      alt={imageAlt || title}
+      className="w-full h-auto object-cover rounded-radius-3 aspect-[3/4]"
+    />
+  )}
+  <div class="flex flex-col gap-2">
+    {title && (
+      <h3 class="font-font-3 font-semibold text-base leading-lh-9 text-color-5">
+        {title}
+      </h3>
+    )}
+    {description && description.trim() && (
+      <div class="font-font-3 font-normal text-sm leading-lh-16 text-color-5" set:html={description} />
+    )}
+  </div>
+</div>
