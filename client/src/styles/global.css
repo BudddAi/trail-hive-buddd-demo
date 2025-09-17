@@ -153,12 +153,14 @@
   --spacing-lh-16: 1.6000000635782878em;
   --spacing-lh-17: 1.610738296271671em;
   --spacing-lh-18: 1.6969696969697em;
+  --spacing-lh-19: 1.6969696969697em;
 
   /* Letter Spacing */
   --tracking-tracking-1: -4.166666666666666%;
   --tracking-tracking-2: -3%;
   --tracking-tracking-3: -2%;
   --tracking-tracking-4: 7.142857142857142%;
+  --tracking-tracking-5: 7.142857142857142%;
 }
 
 /* Container Configuration for Tailwind CSS v4 */

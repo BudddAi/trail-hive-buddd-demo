@@ -6,23 +6,17 @@
   },
   "options": {},
   "attributes": {
-    "preHeading": {
-      "type": "string",
-      "required": false,
-      "maxLength": 100,
-      "minLength": 1
-    },
     "heading": {
       "type": "component",
       "repeatable": false,
       "component": "molecules.heading",
-      "required": false
+      "required": true
     },
     "button": {
       "type": "component",
       "repeatable": false,
       "component": "molecules.button",
-      "required": false
+      "required": true
     },
     "cards": {
       "type": "component",
